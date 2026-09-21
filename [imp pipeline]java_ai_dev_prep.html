@@ -5,120 +5,201 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Full Stack Java AI Developer — Interview Prep</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a1a; background: #fff; }
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
-  .page-title {
-    text-align: center;
-    padding: 18px 20px 10px;
-    border-bottom: 3px solid #0070f3;
+  :root {
+    --orange: #c8550a;
+    --orange-light: #e8854a;
+    --black: #0a0a0a;
+    --dark: #1a1a1a;
+    --charcoal: #2a2a2a;
+    --charcoal2: #333;
+    --gray: #999;
+    --light-gray: #333333;
+    --bg: #0a0a0a;
+    --mono: 'Courier Prime', 'Courier New', Courier, monospace;
   }
-  .page-title h1 { font-size: 20px; color: #0070f3; }
-  .page-title p { font-size: 11px; color: #666; margin-top: 4px; }
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #d0d0d0;
+    background: var(--bg);
+    line-height: 1.7;
+  }
+
+  /* ── MAX WIDTH WRAPPER ── */
+  .page-title,
+  .toc,
+  .part-divider { width: 100%; }
+
+  .page-title { padding: 48px 20px 40px; }
+
+  .toc > *,
+  .section { max-width: 960px; margin-left: auto; margin-right: auto; }
+
+  .toc { padding: 16px 20px; }
+
+  /* ── COVER HEADER ── */
+  .page-title {
+    background: var(--black);
+    color: #fff;
+    text-align: center;
+    padding: 48px 40px 40px;
+  }
+  .page-title .label {
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .page-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .page-title p {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 8px;
+  }
+  .page-title .copyright {
+    font-size: 11px;
+    color: #666;
+    margin-top: 20px;
+    letter-spacing: 1px;
+  }
+
+  /* ── TOC ── */
   .toc {
-    padding: 12px 24px;
-    background: #f0f6ff;
-    border-bottom: 1px solid #cce0ff;
+    padding: 16px 32px;
+    background: #111111;
+    border-bottom: 2px solid var(--orange);
     font-size: 11.5px;
   }
-  .toc strong { color: #0050b3; font-size: 12px; }
-  .toc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 20px; margin-top: 6px; }
-  .toc a { color: #0050b3; text-decoration: none; }
-  .toc a:hover { text-decoration: underline; }
+  .toc strong {
+    color: var(--orange);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .toc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px 24px; margin-top: 6px; }
+  .toc a { color: #ccc; text-decoration: none; }
+  .toc a:hover { color: var(--orange); }
 
+  /* ── PART DIVIDER ── */
   .part-divider {
-    background: #0070f3;
-    color: white;
+    background: var(--charcoal);
+    color: var(--orange);
     text-align: center;
-    padding: 8px;
-    font-size: 15px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin: 0;
+    padding: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-top: 2px solid var(--orange);
+    border-bottom: 2px solid var(--orange);
   }
 
+  /* ── SECTION ── */
   .section {
-    padding: 10px 24px 6px;
-    border-bottom: 1px solid #e8e8e8;
+    padding: 20px 32px 14px;
+    border-bottom: 1px solid #2a2a2a;
     break-inside: avoid;
+    max-width: 960px;
+    margin: 0 auto;
   }
   .section:last-child { border-bottom: none; }
 
+  .section-label {
+    font-size: 10px;
+    color: var(--orange);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
   .section-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #0050b3;
-    background: #e8f0fe;
-    padding: 5px 10px;
-    border-left: 4px solid #0070f3;
-    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--orange);
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
+  /* ── BADGES ── */
   .badge {
-    font-size: 10px;
-    background: #ff4500;
+    font-size: 9px;
+    background: var(--orange);
     color: white;
-    padding: 1px 6px;
-    border-radius: 10px;
-    font-weight: normal;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: var(--mono);
   }
-  .badge-green  { background: #28a745; }
-  .badge-orange { background: #e67e00; }
-  .badge-blue   { background: #0070f3; }
-  .badge-purple { background: #6f42c1; }
+  .badge-green  { background: #2a7a40; }
+  .badge-orange { background: var(--orange); }
+  .badge-blue   { background: #1a4a8a; }
+  .badge-purple { background: #5a2a8a; }
 
-  ol { padding-left: 20px; }
-  ol li { margin-bottom: 5px; line-height: 1.5; }
-  ul { padding-left: 20px; }
-  ul li { margin-bottom: 4px; line-height: 1.5; }
+  ol { padding-left: 22px; margin-bottom: 8px; }
+  ol li { margin-bottom: 6px; }
+  ul { padding-left: 22px; margin-bottom: 8px; }
+  ul li { margin-bottom: 5px; }
 
+  /* ── HINT / CALLOUT BOXES ── */
   .hint {
-    font-size: 12px;
-    color: #444;
-    background: #fffbe6;
-    border-left: 3px solid #f0a500;
-    padding: 5px 10px;
-    margin: 4px 0 6px 0;
-    line-height: 1.65;
+    font-size: 12.5px;
+    color: #d0d0d0;
+    background: #161616;
+    border-left: 4px solid var(--orange);
+    padding: 10px 14px;
+    margin: 10px 0;
+    line-height: 1.75;
   }
-  .hint-blue {
-    background: #f0f6ff;
-    border-left: 3px solid #0070f3;
-    color: #003580;
-  }
-  .hint-green {
-    background: #f0fff4;
-    border-left: 3px solid #28a745;
-    color: #1a4a2a;
-  }
-  .hint-red {
-    background: #fff0f0;
-    border-left: 3px solid #dc3545;
-    color: #7a1010;
-  }
+  .hint strong { color: var(--orange); }
+  /* All variants unified — same dark bg, different accent color */
+  .hint-blue  { background: #161616; border-left-color: var(--orange); }
+  .hint-green { background: #161616; border-left-color: #4a9a5a; }
+  .hint-green strong { color: #6aba7a; }
+  .hint-red   { background: #161616; border-left-color: #c84a4a; }
+  .hint-red strong { color: #e87a7a; }
+  .hint-purple { background: #161616; border-left-color: #8a5ac8; }
+  .hint-purple strong { color: #b08ae0; }
 
+  /* ── CODE ── */
   code {
-    font-family: 'Courier New', monospace;
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    font-family: var(--mono);
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #e8854a;
     font-size: 11.5px;
-    padding: 1px 4px;
+    padding: 1px 5px;
   }
   pre {
-    font-family: 'Courier New', monospace;
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    font-family: var(--mono);
+    background: var(--charcoal);
+    color: #e0e0e0;
+    border-left: 4px solid var(--orange);
     font-size: 11.5px;
-    padding: 8px 12px;
-    margin: 6px 0 4px 0;
+    padding: 10px 14px;
+    margin: 8px 0 6px 0;
     overflow-x: auto;
-    line-height: 1.5;
+    line-height: 1.55;
     white-space: pre-wrap;
   }
 
@@ -126,66 +207,67 @@
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
 
   .mini-card {
-    background: #f8f9ff;
-    border: 1px solid #d0d8f0;
-    border-radius: 4px;
-    padding: 7px 10px;
+    background: #181818;
+    border: 1px solid #333;
+    border-left: 3px solid var(--orange);
+    padding: 8px 12px;
     margin-bottom: 6px;
     font-size: 12px;
-    line-height: 1.55;
+    line-height: 1.6;
   }
-  .mini-card strong { color: #0050b3; }
+  .mini-card strong { color: var(--orange); }
 
-  /* ── Diagram ── */
+  /* ── DIAGRAMS ── */
   .diagram {
-    margin: 8px 0 6px;
+    margin: 12px 0 10px;
     font-size: 12px;
+    background: #111;
+    border: 1px solid var(--orange);
+    border-left: 4px solid var(--orange);
+    padding: 16px 16px 12px;
   }
   .diag-row {
     display: flex;
     align-items: stretch;
-    gap: 0;
-    margin-bottom: 2px;
+    gap: 4px;
+    margin-bottom: 4px;
     flex-wrap: wrap;
   }
   .diag-box {
-    background: #e8f0fe;
-    border: 1px solid #a8c0f0;
-    border-radius: 4px;
+    background: #1e1e1e;
+    border: 1px solid #444;
     padding: 5px 10px;
     text-align: center;
     font-size: 11.5px;
-    font-weight: 600;
-    color: #0050b3;
+    font-weight: 700;
+    color: #ccc;
     flex: 1;
     min-width: 80px;
   }
-  .diag-box.orange { background: #fff3e0; border-color: #ffb74d; color: #7a3f00; }
-  .diag-box.green  { background: #f0fff4; border-color: #81c784; color: #1a4a2a; }
-  .diag-box.red    { background: #fff0f0; border-color: #ef9a9a; color: #7a1010; }
-  .diag-box.purple { background: #f3f0ff; border-color: #b39ddb; color: #3a1a70; }
-  .diag-box.gray   { background: #f5f5f5; border-color: #bdbdbd; color: #444; }
+  .diag-box.orange { background: var(--charcoal); border-color: var(--orange); color: var(--orange); }
+  .diag-box.green  { background: #1a2a1a; border-color: #4a9a5a; color: #8ada9a; }
+  .diag-box.red    { background: #2a1a1a; border-color: #c84a4a; color: #e87a7a; }
+  .diag-box.purple { background: #1e1a2a; border-color: #8a5ac8; color: #b08ae0; }
+  .diag-box.gray   { background: #1a1a1a; border-color: #555; color: #999; }
   .diag-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 4px;
-    color: #0070f3;
-    font-size: 14px;
+    color: var(--orange);
+    font-size: 16px;
     font-weight: bold;
     flex-shrink: 0;
   }
-  .diag-arrow.down {
-    flex-direction: column;
-    padding: 2px 0;
-    font-size: 13px;
-  }
+  .diag-arrow.down { flex-direction: column; padding: 2px 0; font-size: 14px; }
   .diag-label {
-    font-size: 10.5px;
-    color: #777;
+    font-size: 10px;
+    color: #888;
     text-align: center;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
   .diag-col {
     display: flex;
@@ -196,50 +278,81 @@
   }
   .diag-col .diag-box { width: 100%; }
 
-  table.comp { width: 100%; border-collapse: collapse; font-size: 12px; margin: 6px 0; }
-  table.comp th { background: #0070f3; color: white; padding: 5px 8px; text-align: left; }
-  table.comp td { padding: 5px 8px; border-bottom: 1px solid #e8e8e8; }
-  table.comp tr:nth-child(even) td { background: #f8f9ff; }
-
-  .key-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin: 6px 0 4px;
-  }
-  .key-chip {
-    background: #e8f0fe;
-    color: #0050b3;
-    border: 1px solid #b0c8f8;
-    border-radius: 10px;
-    padding: 2px 8px;
+  /* ── TABLES ── */
+  table.comp { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  table.comp th {
+    background: var(--charcoal);
+    color: var(--orange);
+    padding: 6px 10px;
+    text-align: left;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     font-size: 11px;
-    font-family: 'Courier New', monospace;
+    border-bottom: 2px solid var(--orange);
   }
+  table.comp td { padding: 6px 10px; border-bottom: 1px solid #2a2a2a; }
+  table.comp tr:nth-child(even) td { background: #111; }
+  table.comp td strong { color: var(--orange); }
+
+  /* ── KEY CHIPS ── */
+  .key-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 6px; }
+  .key-chip {
+    background: var(--charcoal);
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    padding: 2px 9px;
+    font-size: 10.5px;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: #111111;
+    border-top: 2px solid var(--orange);
+    padding: 10px 32px;
+    font-size: 11px;
+    color: #999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .page-footer a { color: var(--orange); text-decoration: none; }
 
   @media (max-width: 600px) {
-    .section { padding: 10px 14px 6px; }
+    .section { padding: 14px 16px 10px; }
     .toc-grid { grid-template-columns: repeat(2, 1fr); }
     .row-3 { grid-template-columns: 1fr; }
     .row-2 { grid-template-columns: 1fr; }
     .diag-row { gap: 4px; }
     .diag-arrow { display: none; }
+    .page-footer { flex-direction: column; gap: 4px; text-align: center; }
   }
 
   @media print {
     body { font-size: 12px; }
     .part-divider { page-break-before: always; }
     .section { break-inside: avoid; page-break-inside: avoid; }
-    @page { margin: 12mm 14mm; }
+    @page { margin: 14mm 16mm; }
   }
 </style>
 </head>
 <body>
 
+<!-- © nileshkr17 | github.com/nileshkr17 | All rights reserved -->
+<div style="position:absolute;left:-9999px;top:-9999px;font-size:1px;color:transparent;user-select:none;" aria-hidden="true">
+  © nileshkr17 | github.com/nileshkr17 | All rights reserved. Unauthorized reproduction or redistribution prohibited.
+</div>
+
+<div style="display:none;" data-author="nileshkr17" data-repo="github.com/nileshkr17/backend-ai-notes" data-copyright="© 2026 nileshkr17. All rights reserved."></div>
+
+
 <!-- HEADER -->
 <div class="page-title">
-  <h1>Full Stack Java AI Developer | Interview Prep</h1>
-  <p>Background: Java · Spring Boot · Kafka · MongoDB · RAG pipeline</p>
+  <div class="label">Interview Prep</div>
+  <h1>Full Stack Java AI Developer</h1>
+  <p>10 Topics — Mental Model + Interview Answer + Impress Point</p>
+  <div class="copyright">© @nileshkr17 &nbsp;|&nbsp; github.com/nileshkr17</div>
 </div>
 
 <!-- TOC -->
@@ -719,9 +832,10 @@
 </div>
 
 <!-- FOOTER -->
-<div style="background:#f0f6ff; border-top:2px solid #0070f3; padding:10px 24px; font-size:11px; color:#555; text-align:center;">
-  Full Stack Java AI Developer — Interview Prep &nbsp;|&nbsp;
-  <strong style="color:#0050b3">Strategy:</strong> Ground every answer in your real experience — LangChain + MongoDB + OpenAI RAG project + Kafka background.
+<div class="page-footer">
+  <span>© @nileshkr17 &nbsp;|&nbsp; <a href="https://github.com/nileshkr17">github.com/nileshkr17</a></span>
+  <span>Full Stack Java AI Developer — Interview Prep</span>
+  <span><strong style="color:var(--orange)">Strategy:</strong> Ground every answer in real experience.</span>
 </div>
 
 </body>
