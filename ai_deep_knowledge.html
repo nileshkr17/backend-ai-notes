@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/LLM Engineering — Deep Knowledge for Java Developers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a1a; background: #fff; }
+
+  .page-title {
+    text-align: center;
+    padding: 18px 20px 10px;
+    border-bottom: 3px solid #0070f3;
+  }
+  .page-title h1 { font-size: 20px; color: #0070f3; }
+  .page-title p  { font-size: 11px; color: #666; margin-top: 4px; }
+
+  .toc {
+    padding: 12px 24px;
+    background: #f0f6ff;
+    border-bottom: 1px solid #cce0ff;
+    font-size: 11.5px;
+  }
+  .toc strong { color: #0050b3; font-size: 12px; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px 20px;
+    margin-top: 6px;
+  }
+  .toc a { color: #0050b3; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  .part-divider {
+    background: #0070f3;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .section {
+    padding: 12px 24px 10px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0050b3;
+    background: #e8f0fe;
+    padding: 5px 10px;
+    border-left: 4px solid #0070f3;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .badge {
+    font-size: 10px;
+    background: #ff4500;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  .badge-green  { background: #28a745; }
+  .badge-orange { background: #e67e00; }
+  .badge-blue   { background: #0070f3; }
+  .badge-purple { background: #6f42c1; }
+
+  p { margin-bottom: 7px; line-height: 1.65; }
+  ol { padding-left: 20px; margin-bottom: 7px; }
+  ol li { margin-bottom: 5px; line-height: 1.6; }
+  ul { padding-left: 20px; margin-bottom: 7px; }
+  ul li { margin-bottom: 4px; line-height: 1.6; }
+
+  /* Hint boxes */
+  .hint {
+    font-size: 12px;
+    color: #444;
+    background: #fffbe6;
+    border-left: 3px solid #f0a500;
+    padding: 6px 10px;
+    margin: 6px 0;
+    line-height: 1.65;
+  }
+  .hint-blue {
+    background: #f0f6ff;
+    border-left: 3px solid #0070f3;
+    color: #003580;
+  }
+  .hint-green {
+    background: #f0fff4;
+    border-left: 3px solid #28a745;
+    color: #1a4a2a;
+  }
+  .hint-red {
+    background: #fff0f0;
+    border-left: 3px solid #dc3545;
+    color: #7a1010;
+  }
+  .hint-purple {
+    background: #f8f0ff;
+    border-left: 3px solid #6f42c1;
+    color: #3a1a70;
+  }
+
+  /* Sub-headings within a section */
+  .sub-heading {
+    font-size: 12.5px;
+    font-weight: bold;
+    color: #0050b3;
+    margin: 10px 0 4px;
+    padding-bottom: 2px;
+    border-bottom: 1px dashed #b0c8f8;
+  }
+
+  code {
+    font-family: 'Courier New', monospace;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 11.5px;
+    padding: 1px 4px;
+  }
+  pre {
+    font-family: 'Courier New', monospace;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 11.5px;
+    padding: 8px 12px;
+    margin: 6px 0;
+    overflow-x: auto;
+    line-height: 1.55;
+    white-space: pre-wrap;
+  }
+
+  /* Comparison table */
+  table.comp { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  table.comp th { background: #0070f3; color: white; padding: 5px 8px; text-align: left; }
+  table.comp td { padding: 5px 8px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+  table.comp tr:nth-child(even) td { background: #f8f9ff; }
+
+  /* Flow diagram */
+  .diag-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 6px 0;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .diag-box {
+    background: #e8f0fe;
+    border: 1px solid #a8c0f0;
+    border-radius: 4px;
+    padding: 5px 9px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #0050b3;
+    flex: 1;
+    min-width: 70px;
+  }
+  .diag-box.orange { background: #fff3e0; border-color: #ffb74d; color: #7a3f00; }
+  .diag-box.green  { background: #f0fff4; border-color: #81c784; color: #1a4a2a; }
+  .diag-box.red    { background: #fff0f0; border-color: #ef9a9a; color: #7a1010; }
+  .diag-box.purple { background: #f3f0ff; border-color: #b39ddb; color: #3a1a70; }
+  .diag-box.gray   { background: #f5f5f5; border-color: #bdbdbd; color: #444; }
+  .diag-box small  { display: block; font-weight: normal; font-size: 10px; color: #777; }
+  .diag-arrow {
+    color: #0070f3;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+  .diag-label {
+    font-size: 10.5px;
+    color: #888;
+    margin: 2px 0 4px;
+    font-style: italic;
+  }
+
+  /* Key chips */
+  .key-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 8px 0 4px;
+  }
+  .key-chip {
+    background: #e8f0fe;
+    color: #0050b3;
+    border: 1px solid #b0c8f8;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* Priority boxes */
+  .prio-box {
+    margin: 6px 0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .prio-red    { background: #fff0f0; border: 1px solid #ffb3b3; }
+  .prio-yellow { background: #fffbe6; border: 1px solid #ffe066; }
+  .prio-green  { background: #f0fff4; border: 1px solid #b3f0c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+
+  @media (max-width: 600px) {
+    .section  { padding: 10px 14px 8px; }
+    .toc-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col  { grid-template-columns: 1fr; }
+    .diag-arrow { display: none; }
+  }
+
+  @media print {
+    body { font-size: 11.5px; }
+    .part-divider { page-break-before: always; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    @page { margin: 12mm 14mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-title">
+  <h1>AI / LLM Engineering — Deep Knowledge for Java Backend Developers</h1>
+  <p>Part 0: Landscape Map &nbsp;+&nbsp; 10 Deep-Knowledge Topics &nbsp;+&nbsp; Part 2: Production Code (RAG, Kafka, Security, pgvector, Errors) &nbsp;+&nbsp; Part 3: Testing, BTP Deployment, Scale &amp; STAR Story &nbsp;|&nbsp; Nilesh &nbsp;|&nbsp; August 2026</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <strong>Contents</strong>
+  <div class="toc-grid">
+    <div><a href="#p0-landscape"><strong>PART 0 — The AI Landscape Map</strong></a></div>
+    <div><a href="#p0-models">A. LLM Models — What Exists &amp; When to Use</a></div>
+    <div><a href="#p0-apis">B. APIs &amp; SDKs — OpenAI, Anthropic, Azure, Spring AI</a></div>
+    <div><a href="#p0-frameworks">C. Frameworks — LangChain, LangGraph, AutoGen, Spring AI</a></div>
+    <div><a href="#p0-vectordbs">D. Vector Databases — pgvector, Pinecone, Weaviate, MongoDB</a></div>
+    <div><a href="#p0-embedding">E. Embedding Models — OpenAI, Cohere, open-source</a></div>
+    <div><a href="#p0-decision">F. Decision Tree — What to Use When</a></div>
+    <div><a href="#t1">1. How LLMs Work at Inference Time</a></div>
+    <div><a href="#t2">2. Why RAG Exists — RAG vs Fine-Tuning</a></div>
+    <div><a href="#t3">3. Vector Embeddings &amp; Cosine Similarity</a></div>
+    <div><a href="#t4">4. LangChain Architecture</a></div>
+    <div><a href="#t5">5. LangGraph — Why Graphs Over Chains</a></div>
+    <div><a href="#t6">6. AI Agents — ReAct Loop &amp; Why They Fail</a></div>
+    <div><a href="#t7">7. Multi-Agent Systems</a></div>
+    <div><a href="#t8">8. Function Calling — How It Works Mechanically</a></div>
+    <div><a href="#t9">9. Guardrails &amp; Hallucination</a></div>
+    <div><a href="#t10">10. Token Economics &amp; Cost Optimization</a></div>
+    <div><a href="#p2-code"><strong>PART 2 — Production Code &amp; Patterns</strong></a></div>
+    <div><a href="#p2-rag">11. Spring AI RAG Endpoint (full code)</a></div>
+    <div><a href="#p2-streaming">12. Streaming + Function Calling in Java</a></div>
+    <div><a href="#p2-kafka">13. Kafka + AI Integration Patterns</a></div>
+    <div><a href="#p2-security">14. Spring Security + XSUAA securing AI APIs</a></div>
+    <div><a href="#p2-pgvector">15. pgvector Setup + Ingestion Pipeline in Java</a></div>
+    <div><a href="#p2-errors">16. Error Handling &amp; Retry Logic for LLM Calls</a></div>
+    <div><a href="#p3-testing"><strong>PART 3 — Testing, Deployment &amp; Scale</strong></a></div>
+    <div><a href="#p3-testing">17. Testing AI Components — Mocking &amp; Evaluation</a></div>
+    <div><a href="#p3-btp">18. BTP Deployment — CF, XSUAA, AI Core Service Tile</a></div>
+    <div><a href="#p3-scale">19. System Design: Scale AI App to 10K Users</a></div>
+    <div><a href="#p3-star">20. Behavioral: Your RAG Project as STAR Story</a></div>
+  </div>
+</div>
+
+<div class="part-divider" id="p0-landscape">PART 0 — THE AI LANDSCAPE MAP: WHAT IS WHAT &amp; WHEN TO USE WHICH</div>
+
+<!-- ================================================================ -->
+<!-- P0-A: LLM Models                                                  -->
+<!-- ================================================================ -->
+<div class="section" id="p0-models">
+  <div class="section-title">A. LLM Models — Every Major Model, What It Is, When to Use It <span class="badge badge-blue">START HERE</span></div>
+
+  <div class="sub-heading">What Is an LLM?</div>
+  <p>A Large Language Model (LLM) is a neural network trained on vast amounts of text to predict the next token. After training, it can generate coherent text, answer questions, write code, reason through problems, and call tools. You access it via an API — you send text in, you get text (or a structured object) back. You never "run" it locally in production (unless you use open-source models).</p>
+  <p><strong>The key mental model:</strong> An LLM is a stateless function. Input = prompt. Output = completion. No memory between calls. Every conversation turn must re-send the full history. This is exactly like a stateless REST endpoint.</p>
+
+  <div class="sub-heading">The Major Model Families</div>
+  <table class="comp">
+    <thead><tr><th>Provider</th><th>Model</th><th>Tier</th><th>Best For</th><th>Context Window</th></tr></thead>
+    <tbody>
+      <tr><td><strong>OpenAI</strong></td><td>GPT-4o</td><td>Top</td><td>Complex reasoning, code, RAG synthesis</td><td>128K tokens</td></tr>
+      <tr><td><strong>OpenAI</strong></td><td>GPT-4o mini</td><td>Fast/Cheap</td><td>Classification, extraction, simple Q&amp;A</td><td>128K tokens</td></tr>
+      <tr><td><strong>OpenAI</strong></td><td>o1 / o3</td><td>Reasoning</td><td>Math, multi-step logic, complex planning</td><td>200K tokens</td></tr>
+      <tr><td><strong>Anthropic</strong></td><td>Claude 3.5 Sonnet</td><td>Top</td><td>Long-context analysis, instruction following</td><td>200K tokens</td></tr>
+      <tr><td><strong>Anthropic</strong></td><td>Claude 3 Haiku</td><td>Fast/Cheap</td><td>Fast tasks, guardrail checks, cheap routing</td><td>200K tokens</td></tr>
+      <tr><td><strong>Anthropic</strong></td><td>Claude Opus 4</td><td>Premium</td><td>Most demanding reasoning tasks</td><td>200K tokens</td></tr>
+      <tr><td><strong>Google</strong></td><td>Gemini 2.0 Flash</td><td>Fast</td><td>Multimodal (text+image+audio), low latency</td><td>1M tokens</td></tr>
+      <tr><td><strong>Meta (open)</strong></td><td>Llama 3.1 / 3.3</td><td>Open-source</td><td>On-premise, no data leaving org, fine-tuning</td><td>128K tokens</td></tr>
+      <tr><td><strong>Mistral (open)</strong></td><td>Mistral 7B / Mixtral</td><td>Open-source</td><td>Lightweight deployment, European data residency</td><td>32K tokens</td></tr>
+      <tr><td><strong>SAP</strong></td><td>SAP AI Core models</td><td>Enterprise</td><td>BTP apps, data stays in SAP ecosystem</td><td>Varies</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">Model Selection Decision Rules</div>
+  <ol>
+    <li><strong>Simple task (classify, extract, summarize)?</strong> → GPT-4o mini or Claude Haiku. 10-16× cheaper, nearly identical quality for structured tasks.</li>
+    <li><strong>Complex reasoning, multi-step, RAG synthesis?</strong> → GPT-4o or Claude 3.5 Sonnet.</li>
+    <li><strong>Data must not leave your org/region?</strong> → Open-source Llama/Mistral self-hosted, or SAP AI Core on BTP.</li>
+    <li><strong>Very long documents (100+ pages)?</strong> → Gemini 2.0 Flash (1M context) or Claude (200K).</li>
+    <li><strong>Math / logic-heavy planning?</strong> → OpenAI o1/o3 (slower, uses chain-of-thought internally).</li>
+  </ol>
+
+  <div class="hint hint-blue">
+    <strong>SAP BTP context:</strong> SAP AI Core (part of SAP AI Launchpad on BTP) acts as a managed proxy to multiple LLMs including GPT-4o via Azure OpenAI and select other models. You write code against the Azure OpenAI-compatible endpoint — same API shape as OpenAI, just a different base URL. Spring AI handles this transparently.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">GPT-4o</span>
+    <span class="key-chip">GPT-4o mini</span>
+    <span class="key-chip">Claude Sonnet</span>
+    <span class="key-chip">Claude Haiku</span>
+    <span class="key-chip">Llama 3 (open)</span>
+    <span class="key-chip">SAP AI Core</span>
+    <span class="key-chip">stateless function</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P0-B: APIs & SDKs                                                 -->
+<!-- ================================================================ -->
+<div class="section" id="p0-apis">
+  <div class="section-title">B. APIs &amp; SDKs — OpenAI, Anthropic, Azure OpenAI, Spring AI — What Each Is <span class="badge badge-blue">TOOLING</span></div>
+
+  <div class="sub-heading">The OpenAI API</div>
+  <p>The de-facto standard for LLM APIs. Everything else copies its shape. Key endpoints: <code>/chat/completions</code> (text generation), <code>/embeddings</code> (vector generation), <code>/images/generations</code> (image generation). Request = JSON with <code>model</code>, <code>messages[]</code>, optional <code>tools[]</code>. Response = JSON with <code>choices[]</code>.</p>
+  <p><strong>When to use directly:</strong> When you need low-level control, are not in a Spring ecosystem, or are building something custom in Python/Node.js. The official Python SDK is <code>openai</code>. For Java, use the community <code>openai-java</code> SDK or Spring AI (preferred).</p>
+
+  <div class="sub-heading">The Anthropic API (Claude)</div>
+  <p>Similar REST API shape but different field names — <code>/messages</code> endpoint, <code>system</code> is a top-level field (not a message role), tool definitions use slightly different schema. Not 100% OpenAI-compatible.</p>
+  <p><strong>When to use directly:</strong> When you specifically need Claude's capabilities (longer context, strong instruction following) and aren't using an abstraction layer.</p>
+
+  <div class="sub-heading">Azure OpenAI Service</div>
+  <p>Microsoft's hosted version of OpenAI models (GPT-4o, GPT-4o mini, embeddings). The API is nearly identical to OpenAI's, with two differences: you use a deployment name instead of a model name, and you authenticate with an Azure AD token or API key scoped to your Azure resource. <strong>SAP AI Core uses this under the hood</strong> for GPT models.</p>
+  <p><strong>When to use:</strong> Enterprise/regulated environments where data must stay in Azure regions, or when your org has an existing Azure agreement. Required for SAP BTP AI Core integration.</p>
+
+  <div class="sub-heading">Spring AI — The Java Abstraction Layer</div>
+  <p>Spring AI is a Spring Framework module (not a separate API provider). It wraps OpenAI, Azure OpenAI, Anthropic, Ollama, and others behind a unified Java interface. You switch providers by changing <code>application.properties</code>, not Java code.</p>
+
+  <table class="comp">
+    <thead><tr><th>You want to...</th><th>Spring AI class/method</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Call an LLM (blocking)</td><td><code>ChatClient.prompt().user().call().content()</code></td><td>Returns String</td></tr>
+      <tr><td>Call an LLM (streaming)</td><td><code>ChatClient.prompt().user().stream().content()</code></td><td>Returns <code>Flux&lt;String&gt;</code></td></tr>
+      <tr><td>Generate an embedding</td><td><code>EmbeddingModel.embed(text)</code></td><td>Returns <code>float[]</code></td></tr>
+      <tr><td>Store vectors</td><td><code>VectorStore.add(List&lt;Document&gt;)</code></td><td>Embeds + stores</td></tr>
+      <tr><td>Search vectors</td><td><code>VectorStore.similaritySearch(query)</code></td><td>Returns top-K docs</td></tr>
+      <tr><td>RAG (automatic)</td><td><code>QuestionAnswerAdvisor</code></td><td>Auto-retrieves + injects context</td></tr>
+      <tr><td>Function/tool calling</td><td><code>@Tool</code> / <code>FunctionCallback</code></td><td>Registers Java method as LLM tool</td></tr>
+      <tr><td>Structured output</td><td><code>BeanOutputConverter</code></td><td>Auto-schema + parse to POJO</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hint hint-green">
+    <strong>When to use Spring AI vs raw API:</strong> If you're in a Spring Boot app — always Spring AI. It saves you from writing HTTP clients, JSON serialization, retry logic, and streaming handling. If you're in Python — use LangChain or the raw SDK. Spring AI is Java-only.
+  </div>
+
+  <div class="hint">
+    <strong>Spring AI config example (swap provider by changing one property):</strong>
+    <pre>## Use OpenAI
+spring.ai.openai.api-key=sk-...
+spring.ai.openai.chat.options.model=gpt-4o
+
+## Swap to Azure OpenAI — same Java code, zero changes
+spring.ai.azure.openai.api-key=...
+spring.ai.azure.openai.endpoint=https://your-resource.openai.azure.com/
+spring.ai.azure.openai.chat.options.deployment-name=gpt-4o</pre>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">OpenAI /chat/completions</span>
+    <span class="key-chip">Azure OpenAI deployment name</span>
+    <span class="key-chip">Anthropic /messages</span>
+    <span class="key-chip">Spring AI ChatClient</span>
+    <span class="key-chip">provider portability</span>
+    <span class="key-chip">Flux streaming</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P0-C: Frameworks                                                  -->
+<!-- ================================================================ -->
+<div class="section" id="p0-frameworks">
+  <div class="section-title">C. Frameworks — LangChain, LangGraph, AutoGen, Spring AI, Ollama — What Each Does <span class="badge badge-orange">CHOOSE WISELY</span></div>
+
+  <div class="sub-heading">The Framework Landscape — One Sentence Each</div>
+  <table class="comp">
+    <thead><tr><th>Framework</th><th>Language</th><th>What It Is</th><th>Use When</th><th>Don't Use When</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>LangChain</strong></td><td>Python / JS</td>
+        <td>Toolbox of LLM building blocks — chains, agents, retrievers, memory, tools</td>
+        <td>Rapid prototyping, RAG pipelines, simple agents in Python</td>
+        <td>You need fine-grained control over agent control flow</td>
+      </tr>
+      <tr>
+        <td><strong>LangGraph</strong></td><td>Python / JS</td>
+        <td>Graph-based agent orchestration — nodes, edges, state, cycles, checkpoints</td>
+        <td>Production agents with branching, loops, human-in-the-loop, retries</td>
+        <td>Simple linear pipelines (overkill)</td>
+      </tr>
+      <tr>
+        <td><strong>AutoGen</strong></td><td>Python</td>
+        <td>Multi-agent conversation framework — agents talk to each other via messages</td>
+        <td>Multi-agent systems, critic-writer patterns, code execution agents</td>
+        <td>Single-agent workflows</td>
+      </tr>
+      <tr>
+        <td><strong>Spring AI</strong></td><td>Java</td>
+        <td>Spring Framework module wrapping LLM APIs behind unified Java interfaces</td>
+        <td>Any Java/Spring Boot LLM integration, RAG in Java, enterprise BTP apps</td>
+        <td>You're not in a Java/Spring ecosystem</td>
+      </tr>
+      <tr>
+        <td><strong>Ollama</strong></td><td>Any (REST)</td>
+        <td>Local server for running open-source LLMs on your machine</td>
+        <td>Local dev without API costs, data privacy, testing open-source models</td>
+        <td>Production at scale (no managed infra)</td>
+      </tr>
+      <tr>
+        <td><strong>LlamaIndex</strong></td><td>Python</td>
+        <td>Data framework focused purely on RAG — ingestion, indexing, querying</td>
+        <td>Complex RAG pipelines, multiple data sources, query engines</td>
+        <td>You need agent capabilities beyond RAG</td>
+      </tr>
+      <tr>
+        <td><strong>Haystack</strong></td><td>Python</td>
+        <td>Production-focused pipeline framework for search + RAG</td>
+        <td>Enterprise search, document processing pipelines</td>
+        <td>You need flexible agent patterns</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">How LangChain, LangGraph, and Spring AI Relate to Each Other</div>
+  <p>These are NOT competing — they operate at different levels:</p>
+  <ul>
+    <li><strong>LangChain</strong> = the toolbox. Gives you individual components (LLM wrappers, retrievers, memory, tools). Python-native.</li>
+    <li><strong>LangGraph</strong> = the orchestration layer built ON TOP of LangChain. Uses LangChain components as nodes in a graph. Think: LangChain gives you lego bricks, LangGraph tells you how to snap them together into complex structures.</li>
+    <li><strong>Spring AI</strong> = the Java equivalent of LangChain's core (model calling, embeddings, vector stores, RAG). Does NOT include a LangGraph equivalent yet — for graph-based agents in Java, you'd implement state machine logic manually or call a Python LangGraph service.</li>
+  </ul>
+
+  <div class="hint hint-blue">
+    <strong>For your SAP BTP interview:</strong> The interviewer expects you to know Spring AI deeply (it's Java), know LangChain/LangGraph conceptually (industry standard, many integrations), and be aware of AutoGen (multi-agent trend). You don't need to have built with all of them — but you must explain the tradeoffs.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">LangChain = toolbox</span>
+    <span class="key-chip">LangGraph = orchestration graph</span>
+    <span class="key-chip">AutoGen = multi-agent chat</span>
+    <span class="key-chip">Spring AI = Java LLM layer</span>
+    <span class="key-chip">Ollama = local LLMs</span>
+    <span class="key-chip">LlamaIndex = RAG-focused</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P0-D: Vector Databases                                            -->
+<!-- ================================================================ -->
+<div class="section" id="p0-vectordbs">
+  <div class="section-title">D. Vector Databases — pgvector, Pinecone, Weaviate, MongoDB Atlas, HANA Cloud <span class="badge badge-blue">STORAGE LAYER</span></div>
+
+  <div class="sub-heading">What Is a Vector Database?</div>
+  <p>A vector database stores embedding vectors alongside their source text (or metadata), and provides fast <strong>approximate nearest-neighbor (ANN) search</strong> — "find the K vectors most similar to this query vector." This is the retrieval engine in every RAG system.</p>
+  <p>Traditional databases (SQL, MongoDB) store data and let you filter/sort by value. A vector DB lets you search by <em>meaning</em> — "find documents semantically similar to this sentence" — which is impossible in SQL without storing and scanning every vector row by row (slow at scale).</p>
+
+  <div class="hint hint-blue">
+    <strong>Database analogy:</strong> A regular B-tree index is for exact or range lookups: <code>WHERE age &gt; 30</code>. A vector index (HNSW or IVF) is for similarity lookups: <code>WHERE meaning ≈ "cloud outage debugging"</code>. The index structure is fundamentally different — HNSW builds a hierarchical navigable graph of vectors for O(log n) approximate search.
+  </div>
+
+  <div class="sub-heading">Every Major Vector DB — Comparison</div>
+  <table class="comp">
+    <thead><tr><th>Database</th><th>Type</th><th>Best For</th><th>Key Differentiator</th><th>SAP BTP Available?</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>pgvector</strong></td><td>PostgreSQL extension</td>
+        <td>Apps already using PostgreSQL; need SQL + vector together</td>
+        <td>Full SQL: JOINs, transactions, ACID alongside vectors. <code>CREATE INDEX USING hnsw</code></td>
+        <td>✅ PostgreSQL on BTP</td>
+      </tr>
+      <tr>
+        <td><strong>Pinecone</strong></td><td>Managed pure-vector SaaS</td>
+        <td>Large-scale production, billions of vectors, no infra management</td>
+        <td>Serverless, auto-scaling, namespace isolation. No SQL capabilities.</td>
+        <td>⚠️ External SaaS</td>
+      </tr>
+      <tr>
+        <td><strong>Weaviate</strong></td><td>Open-source / managed</td>
+        <td>Hybrid search (vector + keyword BM25 in one query)</td>
+        <td>Built-in BM25 + vector hybrid. GraphQL query interface. Modular.</td>
+        <td>⚠️ Self-host or cloud</td>
+      </tr>
+      <tr>
+        <td><strong>MongoDB Atlas</strong></td><td>Document DB + vector</td>
+        <td>Apps already on MongoDB; embed vectors in existing documents</td>
+        <td>Vector search as a field on your existing documents. No separate DB needed.</td>
+        <td>✅ You used this in your RAG project</td>
+      </tr>
+      <tr>
+        <td><strong>SAP HANA Cloud</strong></td><td>Enterprise RDBMS + vector</td>
+        <td>SAP BTP apps needing vector + HANA's rich SQL + SAP data</td>
+        <td>Native REAL_VECTOR type in HANA. Direct access to SAP business data.</td>
+        <td>✅✅ Native BTP</td>
+      </tr>
+      <tr>
+        <td><strong>Redis (with modules)</strong></td><td>In-memory DB + vector</td>
+        <td>Low-latency semantic cache, small-scale vector search</td>
+        <td>Extremely fast (in-memory). Limited scale. Good for caching embeddings.</td>
+        <td>✅ Redis on BTP</td>
+      </tr>
+      <tr>
+        <td><strong>Chroma</strong></td><td>Open-source, embeddable</td>
+        <td>Local development, prototyping, no infra setup</td>
+        <td>In-process (no server needed). pip install chromadb and go. Not for production scale.</td>
+        <td>❌ Dev only</td>
+      </tr>
+      <tr>
+        <td><strong>Qdrant</strong></td><td>Open-source / managed</td>
+        <td>Filtered vector search with complex metadata conditions</td>
+        <td>Payload filtering baked into the ANN search (not post-filter). Rust-based, fast.</td>
+        <td>⚠️ Self-host</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">When to Use Which — Decision Rules</div>
+  <ol>
+    <li><strong>Already using PostgreSQL on BTP?</strong> → <code>pgvector</code>. Zero new infra, SQL joins work, Spring AI has a pgvector <code>VectorStore</code> bean. Best default choice for Java/BTP apps.</li>
+    <li><strong>Already using MongoDB?</strong> → MongoDB Atlas Vector Search. Keep data in one place.</li>
+    <li><strong>Building on SAP BTP, data must stay in SAP ecosystem?</strong> → SAP HANA Cloud vector engine. Bonus: direct access to SAP business data (BW, S/4HANA tables) for retrieval.</li>
+    <li><strong>Need hybrid search (semantic + keyword) out of the box?</strong> → Weaviate.</li>
+    <li><strong>Need planet-scale (hundreds of millions of vectors), fully managed, no SQL?</strong> → Pinecone.</li>
+    <li><strong>Local dev / prototyping?</strong> → Chroma. One pip install, in-process, zero config.</li>
+  </ol>
+
+  <div class="key-row">
+    <span class="key-chip">HNSW index</span>
+    <span class="key-chip">ANN search</span>
+    <span class="key-chip">pgvector (BTP default)</span>
+    <span class="key-chip">HANA Cloud vectors</span>
+    <span class="key-chip">hybrid search = vector + BM25</span>
+    <span class="key-chip">metadata filtering</span>
+    <span class="key-chip">Chroma for dev</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P0-E: Embedding Models                                            -->
+<!-- ================================================================ -->
+<div class="section" id="p0-embedding">
+  <div class="section-title">E. Embedding Models — OpenAI, Cohere, Open-Source — What They Produce &amp; When to Use Each <span class="badge badge-blue">RETRIEVAL QUALITY</span></div>
+
+  <div class="sub-heading">What an Embedding Model Does</div>
+  <p>An embedding model takes text as input and outputs a fixed-length float vector. Unlike a chat model, it produces NO human-readable output — only numbers. Its quality is measured by how well its vectors capture semantic similarity, evaluated on the MTEB (Massive Text Embedding Benchmark).</p>
+  <p><strong>The non-negotiable rule:</strong> Use the exact same embedding model at document ingest time and query time. Different models produce incompatible vector spaces — similarity scores become meaningless. Switching embedding models requires re-embedding all your documents.</p>
+
+  <div class="sub-heading">Major Embedding Models Compared</div>
+  <table class="comp">
+    <thead><tr><th>Model</th><th>Provider</th><th>Dimensions</th><th>Best For</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>text-embedding-3-small</strong></td><td>OpenAI</td><td>1536 (default)</td>
+        <td>General purpose, best price/quality for English RAG</td><td>$0.02 / 1M tokens (very cheap)</td>
+      </tr>
+      <tr>
+        <td><strong>text-embedding-3-large</strong></td><td>OpenAI</td><td>3072 (default)</td>
+        <td>Higher precision tasks, multilingual, long documents</td><td>$0.13 / 1M tokens</td>
+      </tr>
+      <tr>
+        <td><strong>text-embedding-ada-002</strong></td><td>OpenAI</td><td>1536</td>
+        <td>Legacy — still works but superseded by v3</td><td>$0.10 / 1M tokens</td>
+      </tr>
+      <tr>
+        <td><strong>embed-english-v3.0</strong></td><td>Cohere</td><td>1024</td>
+        <td>Strong English RAG, supports compressed int8 vectors (saves storage)</td><td>$0.10 / 1M tokens</td>
+      </tr>
+      <tr>
+        <td><strong>embed-multilingual-v3.0</strong></td><td>Cohere</td><td>1024</td>
+        <td>Multilingual (100+ languages) — best choice for non-English content</td><td>$0.10 / 1M tokens</td>
+      </tr>
+      <tr>
+        <td><strong>multilingual-e5-large</strong></td><td>Microsoft (open)</td><td>1024</td>
+        <td>Open-source multilingual — free, self-hosted, strong MTEB scores</td><td>Free (self-host)</td>
+      </tr>
+      <tr>
+        <td><strong>bge-m3</strong></td><td>BAAI (open)</td><td>1024</td>
+        <td>Open-source, multilingual, supports dense + sparse + colbert retrieval</td><td>Free (self-host)</td>
+      </tr>
+      <tr>
+        <td><strong>nomic-embed-text</strong></td><td>Nomic (open)</td><td>768</td>
+        <td>Open-source, runs locally with Ollama, good for private data</td><td>Free (self-host)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">Decision Rules for Embedding Model Choice</div>
+  <ol>
+    <li><strong>English-only content, want simplest setup?</strong> → <code>text-embedding-3-small</code>. It's cheap, fast, well-supported by Spring AI and LangChain out of the box.</li>
+    <li><strong>Mixed languages (German, English, Japanese...)?</strong> → <code>embed-multilingual-v3.0</code> (Cohere) or <code>multilingual-e5-large</code> (open-source self-hosted).</li>
+    <li><strong>Data cannot leave your infrastructure?</strong> → Open-source model self-hosted: <code>bge-m3</code>, <code>multilingual-e5-large</code>, or <code>nomic-embed-text</code> via Ollama.</li>
+    <li><strong>Need to minimize vector storage cost?</strong> → Cohere's int8 quantized embeddings or Matryoshka dimensions (text-embedding-3-* supports truncating dimensions, e.g., use 256 instead of 1536 with modest quality loss).</li>
+    <li><strong>SAP BTP production app?</strong> → <code>text-embedding-3-small</code> via SAP AI Core (Azure OpenAI endpoint) to keep everything in the BTP ecosystem.</li>
+  </ol>
+
+  <div class="hint hint-red">
+    <strong>Critical mistake:</strong> Many teams embed documents with <code>text-embedding-3-large</code> at ingest (for quality) and then query with <code>text-embedding-3-small</code> (for speed/cost). The vectors are in incompatible spaces. All similarity scores are garbage. Always use the same model for both.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">text-embedding-3-small (default)</span>
+    <span class="key-chip">multilingual-e5-large (open)</span>
+    <span class="key-chip">MTEB benchmark</span>
+    <span class="key-chip">same model at ingest + query</span>
+    <span class="key-chip">Matryoshka dimensions</span>
+    <span class="key-chip">int8 quantization</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P0-F: Decision Tree                                               -->
+<!-- ================================================================ -->
+<div class="section" id="p0-decision">
+  <div class="section-title">F. Master Decision Tree — "I Need to Build X, What Do I Use?" <span class="badge badge-green">USE THIS FIRST</span></div>
+
+  <div class="sub-heading">Scenario → Stack Decision</div>
+  <table class="comp">
+    <thead><tr><th>Scenario</th><th>LLM Model</th><th>Framework</th><th>Vector DB</th><th>Embedding Model</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>RAG chatbot in Spring Boot (SAP BTP)</strong></td>
+        <td>GPT-4o via SAP AI Core</td>
+        <td>Spring AI + QuestionAnswerAdvisor</td>
+        <td>pgvector (PostgreSQL on BTP) or HANA Cloud</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+      <tr>
+        <td><strong>RAG chatbot in Python (quick prototype)</strong></td>
+        <td>GPT-4o or Claude Sonnet</td>
+        <td>LangChain + LCEL</td>
+        <td>Chroma (dev) → Pinecone (prod)</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+      <tr>
+        <td><strong>AI agent with tools (Python)</strong></td>
+        <td>GPT-4o or Claude Sonnet</td>
+        <td>LangGraph (production) or LangChain AgentExecutor (prototype)</td>
+        <td>pgvector or Pinecone for knowledge</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+      <tr>
+        <td><strong>Multi-agent system (Python)</strong></td>
+        <td>GPT-4o (orchestrator) + GPT-4o mini (workers)</td>
+        <td>LangGraph (preferred) or AutoGen</td>
+        <td>Shared Redis or PostgreSQL for state</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+      <tr>
+        <td><strong>Cloud incident triage (Java + SAP BTP)</strong></td>
+        <td>GPT-4o via SAP AI Core</td>
+        <td>Spring AI + Kafka Streams + custom agent loop</td>
+        <td>pgvector for runbook RAG</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+      <tr>
+        <td><strong>Data must stay on-premise</strong></td>
+        <td>Llama 3.1 (self-hosted via Ollama)</td>
+        <td>Spring AI (Ollama provider) or LangChain + Ollama</td>
+        <td>Chroma or pgvector (self-hosted)</td>
+        <td>nomic-embed-text (Ollama) or bge-m3</td>
+      </tr>
+      <tr>
+        <td><strong>Classify / extract (bulk, cheap)</strong></td>
+        <td>GPT-4o mini or Claude Haiku</td>
+        <td>Spring AI ChatClient or direct API call</td>
+        <td>Not needed</td>
+        <td>Not needed</td>
+      </tr>
+      <tr>
+        <td><strong>Semantic search over documents</strong></td>
+        <td>Only embedding model (no chat LLM needed)</td>
+        <td>Spring AI EmbeddingModel + VectorStore</td>
+        <td>pgvector or MongoDB Atlas</td>
+        <td>text-embedding-3-small</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">The Vocabulary Map — One-Line Definitions for Every Term</div>
+  <table class="comp">
+    <thead><tr><th>Term</th><th>What It Is (one sentence)</th><th>Analogy</th></tr></thead>
+    <tbody>
+      <tr><td><strong>LLM</strong></td><td>Neural network that predicts next tokens — stateless text-in, text-out function</td><td>A very smart stateless REST endpoint</td></tr>
+      <tr><td><strong>Token</strong></td><td>Sub-word unit; ~0.75 English words; the unit of LLM input/output and billing</td><td>Lexer token in a Java compiler</td></tr>
+      <tr><td><strong>Context window</strong></td><td>Maximum tokens the model can see at once (input + output combined)</td><td>Kafka consumer in-memory buffer</td></tr>
+      <tr><td><strong>Embedding</strong></td><td>Fixed-length float array representing text's semantic meaning</td><td>A hashCode() that preserves semantic distance</td></tr>
+      <tr><td><strong>Vector DB</strong></td><td>Database that stores embeddings and supports similarity search</td><td>A B-tree index but for meaning, not value</td></tr>
+      <tr><td><strong>RAG</strong></td><td>Fetch relevant docs at query time, inject into prompt — keeps LLM grounded</td><td>REST controller doing a DB lookup before responding</td></tr>
+      <tr><td><strong>Fine-tuning</strong></td><td>Continue training a model on your data to change its behavior/style</td><td>Retraining a classifier on your domain data</td></tr>
+      <tr><td><strong>Prompt engineering</strong></td><td>Crafting input text to reliably produce desired LLM output format/behavior</td><td>Writing a precise API contract / spec</td></tr>
+      <tr><td><strong>Function calling</strong></td><td>LLM returns a structured JSON tool request; your code executes it and returns result</td><td>API gateway delegating to a backend service</td></tr>
+      <tr><td><strong>AI Agent</strong></td><td>LLM in a loop: decides action → executes tool → observes result → repeats</td><td>A while-loop with an LLM as the decision engine</td></tr>
+      <tr><td><strong>ReAct</strong></td><td>Agent reasoning pattern: Thought → Action → Observation → loop</td><td>Think-before-you-act loop with tool calls</td></tr>
+      <tr><td><strong>LangChain</strong></td><td>Python framework of LLM building blocks (chains, retrievers, memory, tools)</td><td>Spring Framework for LLM pipelines</td></tr>
+      <tr><td><strong>LangGraph</strong></td><td>Graph-based agent orchestration layer on top of LangChain</td><td>AWS Step Functions / Camunda for AI agents</td></tr>
+      <tr><td><strong>AutoGen</strong></td><td>Multi-agent framework where agents communicate via structured messages</td><td>Microservices communicating via internal Kafka</td></tr>
+      <tr><td><strong>Spring AI</strong></td><td>Java/Spring abstraction layer over LLM APIs and vector stores</td><td>Spring Data for AI — same pattern, different backend</td></tr>
+      <tr><td><strong>Temperature</strong></td><td>Controls randomness of token sampling — 0 = deterministic, 1.5 = creative</td><td>Jitter percentage on a random number generator</td></tr>
+      <tr><td><strong>Hallucination</strong></td><td>LLM generates plausible but false text — probability ≠ truth</td><td>Code autocomplete suggesting non-existent API methods</td></tr>
+      <tr><td><strong>Guardrails</strong></td><td>Post-processing layer that validates/filters LLM output before it reaches users</td><td>Input validation + output sanitization middleware</td></tr>
+      <tr><td><strong>Semantic cache</strong></td><td>Cache keyed by embedding similarity — near-identical queries hit cache</td><td>Redis cache with a fuzzy key matcher</td></tr>
+      <tr><td><strong>Chunking</strong></td><td>Splitting documents into smaller pieces before embedding for retrieval granularity</td><td>Pagination / batching before inserting into DB</td></tr>
+      <tr><td><strong>Reranker</strong></td><td>Second-pass model that re-scores top-K retrieved chunks for precision</td><td>A refinement filter after an initial broad DB query</td></tr>
+      <tr><td><strong>System prompt</strong></td><td>Instructions to the LLM that define its role, constraints, and output format</td><td>@Configuration class that sets defaults before any request</td></tr>
+      <tr><td><strong>Few-shot</strong></td><td>Including input/output examples in the prompt to show desired behavior</td><td>Unit test examples as implicit documentation</td></tr>
+      <tr><td><strong>Chain-of-thought</strong></td><td>Prompting the model to reason step-by-step before giving a final answer</td><td>Forcing a developer to write a design doc before coding</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hint hint-green">
+    <strong>The golden rule:</strong> Every AI/LLM engineering concept maps to something you already know from backend engineering. Tokens = lexer output. Context window = buffer size. RAG = DB lookup before response. Agents = while-loops. Multi-agent = microservices. Caching = Redis patterns. The difference is the "intelligence" in the middle — but the plumbing is familiar.
+  </div>
+</div>
+
+<div class="part-divider">DEEP KNOWLEDGE — AI/LLM ENGINEERING FROM FIRST PRINCIPLES</div>
+
+
+<!-- ================================================================ -->
+<!-- T1: How LLMs Work at Inference Time                               -->
+<!-- ================================================================ -->
+<div class="section" id="t1">
+  <div class="section-title">1. How LLMs Actually Work at Inference Time — Tokens, Context Window, Temperature, Top-p <span class="badge badge-blue">FOUNDATION</span></div>
+
+  <div class="sub-heading">The Core Idea: Next-Token Prediction</div>
+  <p>An LLM is, at its heart, a function: <strong>given a sequence of tokens, predict the probability distribution of the next token</strong>. That's it. Everything — reasoning, coding, conversation — emerges from doing this billions of times over a huge dataset until the probabilities are very good.</p>
+  <p>Think of it like a Kafka consumer that reads a stream of tokens and outputs a probability score for every word in its 100,000-word vocabulary. It then samples from that distribution, appends the chosen token to the stream, and repeats. The "intelligence" is the quality of the probability distribution, which is learned during training.</p>
+
+  <div class="sub-heading">What Is a Token?</div>
+  <p>A token is not a word — it's a sub-word unit. The vocabulary is built using <strong>Byte-Pair Encoding (BPE)</strong>: start with characters, repeatedly merge the most frequent adjacent pairs into new tokens until you have ~100K tokens. Results:</p>
+  <ul>
+    <li><code>"the"</code> → 1 token</li>
+    <li><code>"Kubernetes"</code> → 3 tokens: <code>Kub</code> <code>ern</code> <code>etes</code></li>
+    <li><code>"@SpringBootApplication"</code> → 6+ tokens</li>
+    <li>1 token ≈ 0.75 English words on average</li>
+  </ul>
+  <div class="hint hint-blue">
+    <strong>Java analogy:</strong> Tokens are like the lexer output in a Java compiler — the raw source code gets split into meaningful units (keywords, identifiers, literals) before parsing. The LLM never "sees" raw characters; it sees token IDs.
+  </div>
+
+  <div class="sub-heading">Context Window — Why It's a Hard Constraint</div>
+  <p>The context window is the maximum number of tokens the model can "see" at once — both your input prompt AND the output it generates. GPT-4o: 128K tokens. Claude 3.5: 200K tokens.</p>
+  <p><strong>Why does this limit exist?</strong> The attention mechanism in transformers is O(n²) in memory — every token must attend to every other token. Doubling the context quadruples the memory. This is a fundamental architectural constraint, not just an API limit.</p>
+  <div class="hint">
+    <strong>Kafka analogy:</strong> The context window is like a Kafka consumer's in-memory buffer. You can only process what's in the buffer. If history exceeds the buffer, you must summarize (compact) old messages — exactly like Kafka log compaction. Anything outside the context window simply doesn't exist for the model.
+  </div>
+  <p><strong>Practical implication:</strong> In a chat application, if the conversation grows past the context limit, you must truncate old messages or summarize them. The model has no "memory" outside the context window — it's all stateless, exactly like an HTTP server.</p>
+
+  <div class="sub-heading">Temperature — Controlling Randomness</div>
+  <p>After the model computes the probability distribution over all tokens, you sample from it. <strong>Temperature</strong> scales the distribution before sampling:</p>
+  <ul>
+    <li><strong>Temperature = 0:</strong> Always pick the highest-probability token. Deterministic, factual, repetitive. Use for: code generation, data extraction, classification.</li>
+    <li><strong>Temperature = 0.7 (default):</strong> Balanced. Some randomness, still coherent. Use for: chat assistants, summaries.</li>
+    <li><strong>Temperature = 1.5+:</strong> Very random. Creative but often incoherent. Use for: brainstorming, creative writing.</li>
+  </ul>
+  <div class="hint hint-blue">
+    <strong>Math intuition:</strong> Softmax converts logits to probabilities. Temperature T divides every logit by T before softmax. Low T sharpens the distribution (winner takes more). High T flattens it (more uniform = more random). Setting T=0 is equivalent to argmax — always pick the top token.
+  </div>
+
+  <div class="sub-heading">Top-p (Nucleus Sampling) — A Smarter Sampling Strategy</div>
+  <p>Instead of sampling from ALL tokens in the vocabulary, top-p (also called nucleus sampling) only samples from the smallest set of tokens whose cumulative probability exceeds p.</p>
+  <p>Example with <code>top_p = 0.9</code>: rank all tokens by probability, sum them up until you hit 90%, and only sample from that "nucleus." If the model is confident (top few tokens dominate), the nucleus is tiny. If uncertain, the nucleus is large. This prevents sampling absurd low-probability tokens while preserving genuine uncertainty.</p>
+  <div class="hint hint-green">
+    <strong>In practice:</strong> OpenAI recommends changing either temperature OR top_p, not both simultaneously. For factual/production tasks: <code>temperature=0, top_p=1</code>. For creative tasks: <code>temperature=0.8, top_p=0.9</code>.
+  </div>
+
+  <div class="sub-heading">What Happens When You Call the API</div>
+  <div class="diag-label">Full inference flow per token</div>
+  <div class="diag-row">
+    <div class="diag-box gray">Your prompt<br><small>tokenized to IDs</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box">Transformer<br><small>attention over all tokens</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box orange">Logits<br><small>score per vocabulary token</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box purple">Softmax + temp<br><small>probability distribution</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box green">Sample token<br><small>append + repeat</small></div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">BPE tokenization</span>
+    <span class="key-chip">context window O(n²)</span>
+    <span class="key-chip">temperature</span>
+    <span class="key-chip">top_p nucleus sampling</span>
+    <span class="key-chip">autoregressive generation</span>
+    <span class="key-chip">stateless</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T2: Why RAG Exists                                                -->
+<!-- ================================================================ -->
+<div class="section" id="t2">
+  <div class="section-title">2. Why RAG Exists — What Problem It Solves, RAG vs Fine-Tuning, When to Use Which <span class="badge badge-orange">CORE CONCEPT</span></div>
+
+  <div class="sub-heading">The Core Problem: LLMs Have a Knowledge Cutoff and No Private Data</div>
+  <p>An LLM is trained on a static snapshot of the internet up to a cutoff date. It knows nothing about: your company's internal documents, your customer data, last week's incidents, or anything that changed after training. You also can't put 10 million documents into a prompt — the context window is too small.</p>
+  <p>There are two solutions: <strong>RAG</strong> (inject knowledge at query time) and <strong>fine-tuning</strong> (bake knowledge into the model weights). They solve fundamentally different problems.</p>
+
+  <div class="sub-heading">How RAG Works — The Mechanism</div>
+  <p>RAG has two phases:</p>
+  <ol>
+    <li><strong>Offline indexing:</strong> Take all your documents, split them into chunks, embed each chunk into a vector, store vector + text in a vector database. This runs once (and incrementally when documents change).</li>
+    <li><strong>Online retrieval + generation:</strong> When a user asks a question, embed the question, find the most similar document chunks (cosine similarity search), inject those chunks into the prompt as context, then call the LLM. The LLM answers using that injected context.</li>
+  </ol>
+  <div class="hint hint-blue">
+    <strong>REST API analogy:</strong> RAG is like a REST API that does a DB lookup before responding. Your controller receives a request, calls the repository layer to fetch relevant data, and passes that data to the service that generates the response. The LLM is your service layer — it never hits a database directly; you fetch the data and hand it over.
+  </div>
+
+  <div class="sub-heading">Fine-Tuning — What It Actually Does</div>
+  <p>Fine-tuning continues training the model on your custom dataset, adjusting the model's weights. It's not "teaching facts" — <strong>it's teaching style, format, and behavior patterns</strong>.</p>
+  <p>Fine-tuning works well for: making a model always respond in JSON, always use a specific tone, follow a proprietary format, or apply domain-specific reasoning patterns. It does NOT work well for injecting facts — facts baked into weights can't be updated without retraining, and models notoriously "forget" or "confuse" factual fine-tuning with hallucinations.</p>
+
+  <div class="sub-heading">Decision Framework: RAG vs Fine-Tuning</div>
+  <table class="comp">
+    <thead><tr><th>Dimension</th><th>RAG</th><th>Fine-Tuning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>What it changes</strong></td><td>Context injected at query time</td><td>Model weights (permanent)</td></tr>
+      <tr><td><strong>Best for</strong></td><td>Dynamic facts, private docs, up-to-date knowledge</td><td>Output style, format, behavioral patterns</td></tr>
+      <tr><td><strong>Update cost</strong></td><td>Cheap — re-index documents</td><td>Expensive — retrain the model</td></tr>
+      <tr><td><strong>Debuggability</strong></td><td>High — you can inspect retrieved chunks</td><td>Low — failures are a black box</td></tr>
+      <tr><td><strong>Hallucination risk</strong></td><td>Lower — grounded in retrieved text</td><td>Higher — model may confabulate "learned" facts</td></tr>
+      <tr><td><strong>Cost</strong></td><td>Vector DB + embedding API calls</td><td>GPU training cost + serving larger model</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hint hint-green">
+    <strong>Production reality:</strong> Most mature AI systems use <strong>both</strong>. Fine-tune once for consistent output format and tone. Use RAG for dynamic, proprietary, or frequently updated knowledge. The two are not mutually exclusive — they operate at different layers.
+  </div>
+
+  <div class="hint hint-red">
+    <strong>Common mistake to avoid:</strong> Teams often reach for fine-tuning first because it sounds powerful. But if your problem is "the model doesn't know our internal documentation," RAG solves it in a day. Fine-tuning for the same problem might take weeks and still hallucinate.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">knowledge cutoff</span>
+    <span class="key-chip">offline indexing</span>
+    <span class="key-chip">online retrieval</span>
+    <span class="key-chip">context injection</span>
+    <span class="key-chip">fine-tuning = style not facts</span>
+    <span class="key-chip">incremental re-indexing</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T3: Vector Embeddings                                             -->
+<!-- ================================================================ -->
+<div class="section" id="t3">
+  <div class="section-title">3. Vector Embeddings — What Is a Vector, Why Cosine Similarity, What Makes a Good Embedding Model <span class="badge badge-orange">CORE CONCEPT</span></div>
+
+  <div class="sub-heading">What Is a Vector Embedding?</div>
+  <p>An embedding model is a neural network that converts text into a fixed-length array of floating-point numbers — a <strong>vector</strong>. For example, OpenAI's <code>text-embedding-3-small</code> produces a vector of 1536 floats for any text input, whether it's 3 words or 3 paragraphs.</p>
+  <p>The key property: <strong>semantically similar texts produce numerically similar vectors</strong>. The model is trained so that "Java Spring Boot framework" and "enterprise Java web development" end up close together in 1536-dimensional space, while "Spring Boot" and "gardening tips" are far apart.</p>
+  <div class="hint hint-blue">
+    <strong>Java analogy:</strong> Think of an embedding as a <code>hashCode()</code> that measures semantic meaning instead of identity. A regular hashCode puts two different objects at completely different hash buckets regardless of how similar they are. An embedding puts similar objects in nearby buckets. It's like a hash function that preserves semantic distance.
+  </div>
+
+  <div class="sub-heading">Why Cosine Similarity (Not Euclidean Distance)?</div>
+  <p>You might ask: why not just use Euclidean distance (straight-line distance between two points in 1536D space)?</p>
+  <p><strong>Because embedding vectors have a direction problem.</strong> The embedding model may produce vectors with different magnitudes for short vs. long texts (a 3-word phrase vs. a 3-paragraph document). Euclidean distance is sensitive to magnitude — long text embeddings can appear "far" from short text embeddings even when they're semantically identical.</p>
+  <p><strong>Cosine similarity</strong> measures the angle between two vectors, ignoring their magnitudes. Two vectors pointing in the same direction have cosine similarity = 1.0 (identical meaning). Perpendicular vectors: 0 (unrelated). Opposite: -1 (antonyms).</p>
+  <pre>cosine_similarity(A, B) = (A · B) / (|A| × |B|)
+
+Example:
+  "Spring Boot"  → [0.8, 0.1, 0.6, ...]  (1536 floats)
+  "Java backend" → [0.7, 0.2, 0.5, ...]  (1536 floats)
+  similarity = ~0.94  ← very close, correct
+
+  "Spring Boot"  → [0.8, 0.1, 0.6, ...]
+  "baking bread" → [0.1, 0.9, 0.1, ...]
+  similarity = ~0.21  ← far apart, correct</pre>
+  <div class="hint hint-blue">
+    <strong>Optimization note:</strong> OpenAI and most modern embedding models normalize their vectors to unit length (magnitude = 1). When vectors are unit-normalized, cosine similarity = dot product. Dot product is a single matrix multiplication — extremely fast on GPUs. This is why vector DBs can search billions of vectors in milliseconds.
+  </div>
+
+  <div class="sub-heading">What Makes a Good Embedding Model?</div>
+  <p>Not all embedding models are equal. The quality is measured on benchmarks like MTEB (Massive Text Embedding Benchmark). Key properties:</p>
+  <ol>
+    <li><strong>Dimensionality:</strong> Higher dimensions = more expressive but more storage/compute. <code>text-embedding-3-large</code> = 3072D. <code>text-embedding-3-small</code> = 1536D. More is not always better for your use case.</li>
+    <li><strong>Domain alignment:</strong> A model trained on general web text may underperform on SAP technical documentation. Domain-specific embedding models (or fine-tuned ones) outperform general models on narrow tasks.</li>
+    <li><strong>Multilingual support:</strong> If your documents are in German, English, and Japanese, use a multilingual model like <code>multilingual-e5-large</code>.</li>
+    <li><strong>Critical rule:</strong> You MUST use the same embedding model at index time (when you embed documents) and query time (when you embed the user question). Using different models is like encoding a file as UTF-8 and trying to decode it as ASCII — the distances are meaningless.</li>
+  </ol>
+
+  <div class="sub-heading">Chunking — Why It Matters for Embedding Quality</div>
+  <p>You can't embed an entire 200-page PDF as one vector — you'd lose all granularity, and a single question about page 5 would retrieve the whole document. You split documents into <strong>chunks</strong> first, then embed each chunk separately.</p>
+  <ul>
+    <li><strong>Fixed-size chunking:</strong> Every chunk = 512 tokens, 50-token overlap. Simple, predictable, loses semantic structure.</li>
+    <li><strong>Recursive character splitting:</strong> Try to split on paragraph boundaries first, then sentences, then words. Preserves natural semantic units.</li>
+    <li><strong>Semantic chunking:</strong> Embed sentences, find points where similarity drops (topic boundary), split there. Best quality, most expensive.</li>
+  </ul>
+  <div class="hint">
+    <strong>Rule of thumb:</strong> Chunk size should match the granularity of your expected questions. If users ask about specific API parameters, small chunks (128 tokens) work better. If they ask about architectural decisions, larger chunks (512–1024 tokens) are better.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">1536-dimensional float[]</span>
+    <span class="key-chip">cosine similarity = angle</span>
+    <span class="key-chip">unit normalization</span>
+    <span class="key-chip">dot product optimization</span>
+    <span class="key-chip">same model at index + query</span>
+    <span class="key-chip">chunking strategy</span>
+    <span class="key-chip">MTEB benchmark</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T4: LangChain Architecture                                        -->
+<!-- ================================================================ -->
+<div class="section" id="t4">
+  <div class="section-title">4. LangChain Architecture — Chains, Agents, Tools, Memory — How They Connect <span class="badge badge-blue">FRAMEWORK</span></div>
+
+  <div class="sub-heading">What LangChain Actually Is</div>
+  <p>LangChain is a Python/JavaScript framework that provides reusable building blocks for LLM applications. Think of it as Spring Framework for AI — it doesn't do the AI itself, it gives you abstractions so you don't have to wire everything from scratch.</p>
+  <p>The core insight: an LLM application is always a composition of the same building blocks — prompt templates, model calls, output parsers, retrieval, memory, tools. LangChain standardizes the interfaces between them.</p>
+  <div class="hint hint-blue">
+    <strong>Spring analogy:</strong> LangChain is to LLM apps what Spring MVC is to web apps. Spring MVC gives you DispatcherServlet, Controllers, Services, Repositories — standardized layers. LangChain gives you PromptTemplate, LLM, OutputParser, Retriever, Memory — standardized LLM pipeline layers.
+  </div>
+
+  <div class="sub-heading">Core Building Block 1: PromptTemplate</div>
+  <p>A <code>PromptTemplate</code> is a string template with variables. At runtime you fill in the variables and get a complete prompt. It's exactly like a Java <code>String.format()</code> or Thymeleaf template — separation of structure from data.</p>
+  <pre>template = """
+You are a helpful SAP assistant.
+Context: {context}
+Question: {question}
+Answer only from the context provided.
+"""
+# Fill in variables → final prompt string sent to LLM</pre>
+
+  <div class="sub-heading">Core Building Block 2: LCEL Chains (LangChain Expression Language)</div>
+  <p>LCEL is the modern LangChain syntax for composing components. Every component is a <strong>Runnable</strong> — it has an <code>invoke()</code> method. You compose Runnables with the pipe operator:</p>
+  <pre>chain = prompt_template | llm | output_parser
+result = chain.invoke({"context": docs, "question": user_query})</pre>
+  <p>The output of each step is the input to the next. This is <strong>function composition</strong> — exactly like Java's <code>Function.andThen()</code>:</p>
+  <pre>// Java equivalent concept:
+Function&lt;Map, PromptValue&gt; step1 = promptTemplate::invoke;
+Function&lt;PromptValue, AIMessage&gt; step2 = llm::invoke;
+Function&lt;AIMessage, String&gt; step3 = outputParser::invoke;
+Function&lt;Map, String&gt; chain = step1.andThen(step2).andThen(step3);</pre>
+
+  <div class="sub-heading">Core Building Block 3: Retriever</div>
+  <p>A Retriever wraps a VectorStore and exposes a <code>get_relevant_documents(query)</code> method. You embed the query, search the vector DB, return the top-K chunks as <code>Document</code> objects. The Retriever is the bridge between your knowledge base and the chain.</p>
+
+  <div class="sub-heading">Core Building Block 4: Memory</div>
+  <p>By default, every LLM call is stateless — it doesn't remember previous turns. <strong>Memory</strong> in LangChain is a component that manages conversation history by appending it to the prompt. Types:</p>
+  <ul>
+    <li><code>ConversationBufferMemory</code> — full history, grows unboundedly, hits context limit fast</li>
+    <li><code>ConversationSummaryMemory</code> — summarizes old turns using another LLM call, stays compact</li>
+    <li><code>ConversationBufferWindowMemory</code> — keep only last K turns</li>
+  </ul>
+  <div class="hint hint-blue">
+    <strong>Kafka analogy:</strong> LangChain Memory is like a Kafka consumer that maintains offset tracking. The "offset" is how much history to retain. ConversationBufferMemory is like never committing offsets (full replay from start). ConversationSummaryMemory is like log compaction — summarize old messages and discard originals.
+  </div>
+
+  <div class="sub-heading">Core Building Block 5: Agents and Tools</div>
+  <p>A <strong>Tool</strong> is any Python function annotated with a name and description. An <strong>Agent</strong> is an LLM loop that decides which tool to call next, calls it, reads the result, and repeats until done. The LLM chooses tools purely based on their text descriptions — this is why description quality matters more than implementation quality.</p>
+
+  <div class="diag-label">LangChain component relationships</div>
+  <div class="diag-row">
+    <div class="diag-box gray">User Input</div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box">PromptTemplate<br><small>fills variables</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box orange">LLM / ChatModel<br><small>OpenAI, Claude...</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box purple">OutputParser<br><small>string / JSON / Pydantic</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box green">Final Output</div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">LCEL pipe operator</span>
+    <span class="key-chip">Runnable interface</span>
+    <span class="key-chip">PromptTemplate</span>
+    <span class="key-chip">Retriever</span>
+    <span class="key-chip">Memory types</span>
+    <span class="key-chip">Tool description quality</span>
+    <span class="key-chip">AgentExecutor</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T5: LangGraph                                                     -->
+<!-- ================================================================ -->
+<div class="section" id="t5">
+  <div class="section-title">5. LangGraph — Why Graphs Over Chains? Nodes, Edges, State, Cycles — Real Use Case <span class="badge badge-purple">ADVANCED</span></div>
+
+  <div class="sub-heading">The Problem With Chains for Agents</div>
+  <p>A LangChain chain is a directed acyclic graph (DAG) — it flows in one direction, no loops, no branching. This works great for simple pipelines: prompt → LLM → parser → done.</p>
+  <p>But real agentic workflows are NOT DAGs. They need:</p>
+  <ul>
+    <li><strong>Cycles:</strong> "Generate answer → validate → if invalid, regenerate" (a loop)</li>
+    <li><strong>Conditional branching:</strong> "If classification is P1 → alert immediately; else → create ticket"</li>
+    <li><strong>Human-in-the-loop:</strong> Pause at a node, wait for human approval, resume</li>
+    <li><strong>Parallel execution:</strong> Run two tools concurrently, merge results</li>
+  </ul>
+  <p>LangChain's <code>AgentExecutor</code> implements a hard-coded while-loop: think → act → observe → repeat. You can't add conditional branches or pauses without hacking the internals. <strong>LangGraph makes the control flow explicit and configurable.</strong></p>
+  <div class="hint hint-blue">
+    <strong>Microservices analogy:</strong> LangChain chains are like a synchronous REST call chain — service A calls B calls C, linear, no branches. LangGraph is like a workflow engine (think Camunda or AWS Step Functions) — you define states, transitions, conditions, and the engine manages execution. You've traded simplicity for control.
+  </div>
+
+  <div class="sub-heading">LangGraph Core Concepts</div>
+  <p><strong>State:</strong> A TypedDict (Python) or Pydantic model that represents everything the graph knows at any point — the conversation history, retrieved documents, current results, error counts, etc. Every node reads from and writes to this shared state. This is the single source of truth for the entire agent run.</p>
+  <p><strong>Nodes:</strong> Python functions that take the current state and return an updated state. Each node is one logical step: "call the LLM," "run the retriever," "validate the output." Nodes are pure functions — they don't call other nodes directly.</p>
+  <p><strong>Edges:</strong> Define which node runs after which. Three types:</p>
+  <ul>
+    <li><strong>Normal edge:</strong> <code>A → B</code> always, unconditionally</li>
+    <li><strong>Conditional edge:</strong> <code>A → B or C</code> based on a function that inspects state</li>
+    <li><strong>Cycle edge:</strong> <code>B → A</code> to loop back — this is what makes agents possible</li>
+  </ul>
+
+  <div class="sub-heading">Real Use Case: Self-Correcting Code Generator</div>
+  <pre>State = { messages, code, error, attempt_count }
+
+Nodes:
+  generate_code(state)  → call LLM to write code
+  execute_code(state)   → run code in sandbox
+  check_result(state)   → did it pass tests?
+
+Edges:
+  generate_code  → execute_code         (always)
+  execute_code   → check_result         (always)
+  check_result   → END                  (if tests pass)
+  check_result   → generate_code        (if tests fail AND attempt &lt; 3)
+  check_result   → human_review         (if attempt >= 3)</pre>
+  <p>This workflow is impossible to express cleanly in a LangChain chain. In LangGraph, it's 15 lines of configuration.</p>
+
+  <div class="sub-heading">Checkpointing — Why It Matters for Production</div>
+  <p>LangGraph supports checkpointing: saving the full state to a persistent store (PostgreSQL, Redis) at every node. This enables:</p>
+  <ul>
+    <li><strong>Resumability:</strong> If the agent crashes mid-run, restart from last checkpoint</li>
+    <li><strong>Human review:</strong> Pause at a "needs approval" node, save state, let a human review, resume — even hours later</li>
+    <li><strong>Debugging:</strong> Replay any run step-by-step by loading saved states</li>
+  </ul>
+  <div class="hint hint-green">
+    <strong>SAP BTP angle:</strong> In a production BTP application, LangGraph + PostgreSQL checkpointing means your AI workflow can survive CF app restarts. Long-running incident triage agents that need human approval can be safely paused and resumed.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">TypedDict state</span>
+    <span class="key-chip">nodes as pure functions</span>
+    <span class="key-chip">conditional edges</span>
+    <span class="key-chip">cycle edges</span>
+    <span class="key-chip">checkpointing</span>
+    <span class="key-chip">human-in-the-loop</span>
+    <span class="key-chip">Step Functions analogy</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T6: AI Agents & ReAct                                             -->
+<!-- ================================================================ -->
+<div class="section" id="t6">
+  <div class="section-title">6. AI Agents — ReAct Loop (Reason + Act), Tool Calling, When Agents Fail and Why <span class="badge badge-orange">CORE CONCEPT</span></div>
+
+  <div class="sub-heading">What Makes Something an "Agent"</div>
+  <p>An LLM call is not an agent. An agent is an LLM in a <strong>loop</strong> that can:</p>
+  <ol>
+    <li>Decide what to do next (not just generate text)</li>
+    <li>Execute an action (call a tool, run code, query a DB)</li>
+    <li>Observe the result and update its plan</li>
+    <li>Repeat until the goal is reached</li>
+  </ol>
+  <p>The key word is <em>loop</em>. Without the loop, it's just a pipeline. With the loop and tool-calling ability, it becomes an agent.</p>
+
+  <div class="sub-heading">The ReAct Pattern — Reasoning + Acting Interleaved</div>
+  <p>ReAct (from the 2022 paper "ReAct: Synergizing Reasoning and Acting in Language Models") is a prompting strategy where the LLM is instructed to alternate between writing its reasoning (Thought) and specifying an action (Act), then receiving the result (Observation), and repeating.</p>
+  <pre>User: What is the current status of incident INC-4521?
+
+Thought: I need to look up the incident status. I should use the get_incident_status tool.
+Action: get_incident_status(incident_id="INC-4521")
+Observation: {"status": "P1 - Active", "assigned_to": "team-sre", "opened_at": "2026-08-07T14:32Z"}
+
+Thought: I have the status. The incident is P1 and active. I can now answer.
+Final Answer: Incident INC-4521 is currently a P1 priority, actively being worked on by team-sre, opened at 14:32 UTC today.</pre>
+  <p>The Thought step is crucial — it forces the model to plan before acting, which significantly improves accuracy on multi-step tasks compared to acting without reasoning.</p>
+  <div class="hint hint-blue">
+    <strong>Debuggability:</strong> The Thought/Action/Observation trace is extremely valuable for debugging. You can see exactly why the agent made each decision. This is like having a stack trace for LLM reasoning — something raw LLM calls don't give you.
+  </div>
+
+  <div class="sub-heading">When Agents Fail — And Why</div>
+  <p>Agents fail in predictable ways. Understanding these failure modes lets you design defensively:</p>
+  <div class="two-col">
+    <div>
+      <div class="prio-box prio-red">
+        <strong>1. Infinite loops:</strong> The agent keeps calling the same tool repeatedly because it can't determine it has enough information to stop. Fix: set <code>max_iterations</code> (e.g., 10) and a hard timeout. Always.
+      </div>
+      <div class="prio-box prio-red" style="margin-top:6px">
+        <strong>2. Wrong tool selection:</strong> The LLM picks the wrong tool because the description is ambiguous. Two tools with similar descriptions cause constant confusion. Fix: write tool descriptions as precise contracts, not marketing copy.
+      </div>
+      <div class="prio-box prio-red" style="margin-top:6px">
+        <strong>3. Hallucinated tool arguments:</strong> The LLM calls a real tool with made-up parameter values. Fix: validate tool inputs against a JSON schema before execution, return a clear error message the agent can react to.
+      </div>
+    </div>
+    <div>
+      <div class="prio-box prio-yellow">
+        <strong>4. Context window overflow:</strong> Long ReAct traces fill the context window. The agent "forgets" earlier observations and makes contradictory decisions. Fix: summarize old observations, use LangGraph checkpointing to persist state outside the context.
+      </div>
+      <div class="prio-box prio-yellow" style="margin-top:6px">
+        <strong>5. Cascading errors:</strong> Tool A returns an error → agent misinterprets it → calls Tool B with wrong input → chain of failures. Fix: each tool must return structured error objects with clear error codes, not generic exception messages.
+      </div>
+    </div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">ReAct loop</span>
+    <span class="key-chip">Thought/Action/Observation</span>
+    <span class="key-chip">max_iterations</span>
+    <span class="key-chip">tool description contracts</span>
+    <span class="key-chip">structured error returns</span>
+    <span class="key-chip">context window overflow</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T7: Multi-Agent Systems                                           -->
+<!-- ================================================================ -->
+<div class="section" id="t7">
+  <div class="section-title">7. Multi-Agent Systems — Orchestrator vs Worker Pattern, How Agents Communicate <span class="badge badge-purple">ADVANCED</span></div>
+
+  <div class="sub-heading">Why Multiple Agents?</div>
+  <p>A single agent handling a complex task accumulates a long ReAct trace, filling the context window and degrading performance. More importantly, a generalist agent is worse at specialized tasks than a focused specialist.</p>
+  <p>Multi-agent systems apply the <strong>microservices principle to AI agents</strong>: decompose a large problem into focused sub-problems, each handled by a specialist agent that has only the tools and context it needs.</p>
+  <div class="hint hint-blue">
+    <strong>Microservices analogy:</strong> A monolithic agent is like a monolith service — it can do everything, but it's hard to scale, debug, and improve. Multiple specialist agents are like microservices — each owns its domain, communicates via defined interfaces, and can be independently improved or scaled.
+  </div>
+
+  <div class="sub-heading">Orchestrator-Worker Pattern</div>
+  <p>The most common multi-agent architecture:</p>
+  <ul>
+    <li><strong>Orchestrator agent:</strong> Receives the high-level goal, breaks it into subtasks, delegates each subtask to the appropriate worker agent, monitors results, and synthesizes the final answer. The orchestrator is typically a more capable (expensive) model.</li>
+    <li><strong>Worker agents:</strong> Each is focused on one capability. They receive a specific task, execute it with their tools, and return a result. Workers can be cheaper, faster models.</li>
+  </ul>
+  <pre>User: "Analyze this cloud incident log, find the root cause, and draft a postmortem."
+
+Orchestrator breaks it down:
+  → Task 1 to LogAnalysisAgent: "Extract error patterns from this log"
+  → Task 2 to KnowledgeAgent: "Find similar past incidents in the runbook DB"
+  → Task 3 to WriterAgent: "Draft postmortem from these findings"
+  ← Orchestrator merges results → Final postmortem</pre>
+
+  <div class="sub-heading">How Agents Communicate</div>
+  <p>Agent-to-agent communication is just structured messages. In practice, two patterns:</p>
+  <ol>
+    <li><strong>Direct function calls (in-process):</strong> The orchestrator calls worker agents as Python functions. Simple, fast, synchronous. Works for small systems. LangGraph implements this natively — worker agents are just nodes in the parent graph.</li>
+    <li><strong>Message queues (distributed):</strong> Each agent is a separate service. The orchestrator publishes tasks to a Kafka topic (or Redis queue); workers consume, process, and publish results back. This is exactly how you'd design microservices — and it handles scale, retries, and fault isolation.</li>
+  </ol>
+  <div class="hint hint-blue">
+    <strong>Kafka parallel:</strong> Multi-agent via Kafka is structurally identical to event-driven microservices. Orchestrator = event producer. Worker agents = Kafka consumers with their own consumer groups. Results = events on a reply topic. The agent framework is just a thin wrapper around patterns you already know.
+  </div>
+
+  <div class="sub-heading">Critical Engineering Concerns</div>
+  <ul>
+    <li><strong>Shared state:</strong> Workers need to see each other's intermediate results. Use a shared state store (Redis, PostgreSQL) — don't try to pass everything through message payloads.</li>
+    <li><strong>Stopping conditions:</strong> Define explicit termination criteria. Without them, agents can create loops where Worker A's output triggers Worker B which triggers Worker A forever.</li>
+    <li><strong>Result aggregation:</strong> When two workers produce conflicting outputs (e.g., one says root cause is Service A, another says Service B), the orchestrator must have a strategy — majority vote, confidence scoring, or escalation to human.</li>
+    <li><strong>Cost control:</strong> Multi-agent = multiple LLM calls. A chain of 5 agents each making 3 tool calls = 15+ API calls per user request. Model routing (cheap model for workers, expensive for orchestrator) is not optional.</li>
+  </ul>
+
+  <div class="key-row">
+    <span class="key-chip">Orchestrator-Worker</span>
+    <span class="key-chip">specialist agents</span>
+    <span class="key-chip">message queue communication</span>
+    <span class="key-chip">shared state store</span>
+    <span class="key-chip">stopping conditions</span>
+    <span class="key-chip">model routing</span>
+    <span class="key-chip">AutoGen</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T8: Function Calling                                              -->
+<!-- ================================================================ -->
+<div class="section" id="t8">
+  <div class="section-title">8. Function Calling in OpenAI/Claude API — How It Works Mechanically, JSON Schema, Parallel Calls <span class="badge badge-blue">FRAMEWORK</span></div>
+
+  <div class="sub-heading">What Function Calling Actually Is</div>
+  <p>Function calling is often misunderstood. The LLM does NOT execute your code. It produces a <strong>structured JSON object</strong> describing which function to call and with what arguments. <em>You</em> execute the function. <em>You</em> return the result. The LLM just decides when and how to ask.</p>
+  <p>The mechanism: you include a list of function schemas in your API request. The LLM, when it decides a function would help, returns a special <code>tool_call</code> object instead of (or alongside) text. Your application reads that object, runs the function, and makes a second API call with the function result appended to the conversation.</p>
+
+  <div class="sub-heading">The Full Mechanical Flow</div>
+  <pre>// Step 1: You send a request with tool definitions
+{
+  "model": "gpt-4o",
+  "messages": [{"role": "user", "content": "What's the status of INC-4521?"}],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_incident_status",
+        "description": "Retrieves current status, severity, and assignee for a cloud incident by ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "incident_id": { "type": "string", "description": "The incident ID, e.g. INC-4521" }
+          },
+          "required": ["incident_id"]
+        }
+      }
+    }
+  ]
+}
+
+// Step 2: LLM returns a tool_call (NOT the final answer)
+{
+  "choices": [{
+    "message": {
+      "role": "assistant",
+      "tool_calls": [{
+        "id": "call_abc123",
+        "type": "function",
+        "function": { "name": "get_incident_status", "arguments": "{\"incident_id\": \"INC-4521\"}" }
+      }]
+    },
+    "finish_reason": "tool_calls"   // ← NOT "stop", means tool call pending
+  }]
+}
+
+// Step 3: You execute get_incident_status("INC-4521") → get result
+// Step 4: You append the result as a "tool" role message
+{
+  "role": "tool",
+  "tool_call_id": "call_abc123",
+  "content": "{\"status\": \"P1 Active\", \"team\": \"sre-cloud\"}"
+}
+
+// Step 5: Send updated conversation → LLM generates final answer</pre>
+
+  <div class="hint hint-blue">
+    <strong>REST API analogy:</strong> This is exactly like an API gateway with a backend call. The LLM is the gateway — it receives the request, determines it needs backend data (<code>tool_call</code>), you fetch from the backend (execute function), you return the data (tool message), and the gateway generates the final response. The LLM is never calling your code directly, just like a gateway never calls the DB directly — it delegates.
+  </div>
+
+  <div class="sub-heading">Parallel Function Calls</div>
+  <p>Modern models (GPT-4o, Claude 3.5) support <strong>parallel tool calls</strong> — the LLM can request multiple tool calls in a single response when it can determine they're independent:</p>
+  <pre>// LLM returns TWO tool calls in one response:
+"tool_calls": [
+  { "id": "call_1", "function": { "name": "get_incident_status", "arguments": "{\"id\":\"INC-4521\"}" }},
+  { "id": "call_2", "function": { "name": "get_service_health",  "arguments": "{\"service\":\"auth-svc\"}" }}
+]
+
+// You execute BOTH in parallel (e.g., two async HTTP calls)
+// Return both results → LLM synthesizes a combined answer</pre>
+  <p>This dramatically reduces latency when the agent needs data from multiple sources. You should execute parallel tool calls concurrently — sequential execution throws away the performance benefit.</p>
+
+  <div class="sub-heading">The Critical Importance of Descriptions</div>
+  <p>The LLM decides which function to call, and with what arguments, based <strong>entirely on the text descriptions</strong> in the schema. This is unlike a regular API where the caller knows exactly what to call. Here, the LLM reads your function name and description and infers intent.</p>
+  <div class="hint hint-red">
+    <strong>Bad description:</strong> <code>"name": "lookup", "description": "Looks up data"</code> — The LLM has no idea when to use this. It will use it randomly or never.<br><br>
+    <strong>Good description:</strong> <code>"name": "get_incident_status", "description": "Retrieves the current status, severity level (P1-P4), assigned team, and opened timestamp for a cloud operations incident by its ID. Use when the user asks about an active or recent incident."</code>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">tool_call JSON response</span>
+    <span class="key-chip">finish_reason: tool_calls</span>
+    <span class="key-chip">tool role message</span>
+    <span class="key-chip">parallel tool calls</span>
+    <span class="key-chip">description as contract</span>
+    <span class="key-chip">JSON schema validation</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T9: Guardrails & Hallucination                                    -->
+<!-- ================================================================ -->
+<div class="section" id="t9">
+  <div class="section-title">9. Guardrails and Hallucination — Why LLMs Hallucinate, How to Detect and Reduce It <span class="badge badge-orange">PRODUCTION CRITICAL</span></div>
+
+  <div class="sub-heading">Why LLMs Hallucinate — The Root Cause</div>
+  <p>Hallucination is not a bug that will be fixed in the next model version. It's a fundamental property of how LLMs work: they are trained to predict the <em>most probable next token</em>, not to verify truth. Probability and truth are not the same thing.</p>
+  <p>During training, the model learned that plausible-sounding statements follow plausible-sounding statements. It has no mechanism to distinguish "I know this" from "this sounds like it could be true." When asked about something it doesn't know, it doesn't say "I don't know" — it says the most statistically likely thing, which may be false.</p>
+  <div class="hint hint-blue">
+    <strong>Code analogy:</strong> Imagine a code auto-complete trained on millions of Stack Overflow posts. It will confidently suggest API calls that don't exist because it learned that <code>someObject.doSomething()</code> often appears in that context — even if <code>doSomething()</code> was never defined. That's hallucination: the model produces statistically plausible output that's factually wrong.
+  </div>
+  <p>Three specific triggers for hallucination:</p>
+  <ol>
+    <li><strong>Knowledge gaps:</strong> The model is asked about events after its training cutoff, proprietary data it was never trained on, or obscure facts underrepresented in training data.</li>
+    <li><strong>Leading questions:</strong> "Confirm that service X caused the outage" nudges the model toward agreement even if it's not true. The model is optimized to be helpful, and agreeing is often the most "helpful"-seeming response.</li>
+    <li><strong>Long context:</strong> The model loses track of details in very long prompts. It may contradict information stated earlier or misremember constraints.</li>
+  </ol>
+
+  <div class="sub-heading">Detection Strategies</div>
+  <ul>
+    <li><strong>Self-consistency:</strong> Ask the model the same question 3–5 times with temperature > 0. If the answers vary significantly, the model is uncertain. High variance = high hallucination risk. Flag for human review.</li>
+    <li><strong>Citation verification:</strong> If you're using RAG, require the model to cite which document chunk it used. Post-process: verify the cited chunk actually exists and actually says what the model claims. Spring AI's <code>QuestionAnswerAdvisor</code> can inject source metadata automatically.</li>
+    <li><strong>Entity cross-validation:</strong> Extract named entities from the output (service names, API names, version numbers) and check them against a known registry. If the model mentions "auth-service-v3" and your service registry has no such service, flag it.</li>
+  </ul>
+
+  <div class="sub-heading">Reduction Strategies — Defense in Depth</div>
+  <div class="two-col">
+    <div>
+      <div class="prio-box prio-green">
+        <strong>Layer 1 — Prevent:</strong><br>
+        Grounding prompt: "Answer ONLY using the provided context. If the answer is not in the context, respond exactly: 'I don't have information about this.'" This single instruction eliminates most hallucinations for RAG systems.
+      </div>
+      <div class="prio-box prio-green" style="margin-top:6px">
+        <strong>Layer 2 — Reduce:</strong><br>
+        Temperature = 0 for factual tasks. Deterministic sampling eliminates the randomness that produces creative but wrong outputs.
+      </div>
+    </div>
+    <div>
+      <div class="prio-box prio-yellow">
+        <strong>Layer 3 — Detect:</strong><br>
+        Output parser with retry: if the output doesn't match expected schema or contains flagged patterns (specific service names, version numbers not in context), retry with a stricter prompt up to N times.
+      </div>
+      <div class="prio-box prio-yellow" style="margin-top:6px">
+        <strong>Layer 4 — Catch:</strong><br>
+        Guardrails advisor as post-processing: a second LLM call (cheap model) or a classifier that checks the output for hallucination signals before returning to the user. In Spring AI, this is an Advisor in the chain.
+      </div>
+    </div>
+  </div>
+
+  <div class="hint hint-red">
+    <strong>What does NOT work:</strong> Asking the model "are you sure about this?" — the model will just confidently affirm the hallucination. Verbal confirmation prompts have near-zero effect on factual accuracy. Use structural/architectural controls, not conversational reassurance.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">next-token probability ≠ truth</span>
+    <span class="key-chip">self-consistency check</span>
+    <span class="key-chip">citation verification</span>
+    <span class="key-chip">entity cross-validation</span>
+    <span class="key-chip">grounding system prompt</span>
+    <span class="key-chip">temperature=0</span>
+    <span class="key-chip">guardrails advisor</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- T10: Token Economics                                              -->
+<!-- ================================================================ -->
+<div class="section" id="t10">
+  <div class="section-title">10. Token Economics — How to Estimate Cost, Prompt Compression, Caching Strategies <span class="badge badge-blue">PRODUCTION CRITICAL</span></div>
+
+  <div class="sub-heading">How Pricing Works</div>
+  <p>LLM APIs charge separately for <strong>input tokens</strong> (everything in your prompt) and <strong>output tokens</strong> (everything the model generates). Output tokens are typically 3–5× more expensive than input tokens because generation is computationally heavier than reading.</p>
+  <pre>// Example pricing (approximate, 2025):
+GPT-4o:       Input: $2.50 / 1M tokens   Output: $10.00 / 1M tokens
+GPT-4o mini:  Input: $0.15 / 1M tokens   Output: $0.60  / 1M tokens
+Claude Sonnet: Input: $3.00 / 1M tokens  Output: $15.00 / 1M tokens
+Claude Haiku:  Input: $0.25 / 1M tokens  Output: $1.25  / 1M tokens
+
+// A typical RAG call with 2000 input tokens and 500 output tokens:
+GPT-4o:    (2000 × $2.50 + 500 × $10.00) / 1M = $0.0100 per call
+GPT-4o mini: (2000 × $0.15 + 500 × $0.60) / 1M = $0.0006 per call
+// 16× cost difference for the same task — model selection is critical</pre>
+
+  <div class="sub-heading">Counting Tokens Before You Call</div>
+  <p>You should count tokens before sending a request for two reasons: (1) avoid hitting context window limits with a cryptic 400 error, and (2) proactively trim context before costs spiral.</p>
+  <ul>
+    <li><strong>Python:</strong> <code>tiktoken</code> library (OpenAI's official tokenizer)</li>
+    <li><strong>Java:</strong> <code>jtokkit</code> library — same BPE algorithm, Java port</li>
+  </ul>
+  <pre>// Java — count tokens with jtokkit before calling API
+EncodingRegistry registry = Encodings.newDefaultEncodingRegistry();
+Encoding enc = registry.getEncodingForModel(ModelType.GPT_4O);
+int tokenCount = enc.countTokens(promptString);
+if (tokenCount &gt; 100_000) { // trim/summarize history }</pre>
+
+  <div class="sub-heading">Prompt Compression — Where to Cut Tokens</div>
+  <ol>
+    <li><strong>System prompt trimming:</strong> Your system prompt runs on every single API call. A bloated 500-token system prompt costs 500 × (calls per day) × (price). Remove filler phrases, use abbreviations for repeated terms, be terse. Write system prompts like you're paying per character — you are.</li>
+    <li><strong>Chat history summarization:</strong> Instead of appending all previous turns (O(n) growth), summarize older turns into a compact paragraph when they exceed a threshold. Use a cheap model (Haiku, GPT-4o mini) for the summarization call itself.</li>
+    <li><strong>RAG chunk tuning:</strong> Every retrieved document chunk costs tokens. Retrieving 5 chunks of 512 tokens = 2560 prompt tokens per query. Optimize: smaller chunks for precise questions, limit to top-3 not top-10, filter by metadata before vector search to retrieve fewer but more relevant chunks.</li>
+    <li><strong>max_tokens cap:</strong> Always set <code>max_tokens</code> on your completion. An uncapped response on a complex question can generate 4000+ tokens when you needed 200. Set it based on expected output length.</li>
+  </ol>
+
+  <div class="sub-heading">Model Routing — The Highest-Leverage Optimization</div>
+  <p>Not every task needs the smartest model. Routing requests to appropriate models by complexity is typically the single largest cost lever — 50–70% savings without degrading quality for the tasks that don't need it.</p>
+  <table class="comp">
+    <thead><tr><th>Task Type</th><th>Model Recommendation</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Classification (P1/P2/P3?)</td><td>GPT-4o mini / Haiku</td><td>Simple decision, cheap model is sufficient</td></tr>
+      <tr><td>Structured data extraction</td><td>GPT-4o mini / Haiku</td><td>Follows a schema, doesn't need deep reasoning</td></tr>
+      <tr><td>RAG question answering</td><td>GPT-4o / Sonnet</td><td>Needs to synthesize across context</td></tr>
+      <tr><td>Complex multi-step reasoning</td><td>GPT-4o / Opus</td><td>Full capability needed</td></tr>
+      <tr><td>Code generation</td><td>GPT-4o (code models)</td><td>Specialized training matters</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">Semantic Caching — Free Tokens</div>
+  <p>Many user questions are semantically near-identical even if worded differently. A semantic cache works like this:</p>
+  <ol>
+    <li>Embed the incoming query → get vector</li>
+    <li>Search cache by cosine similarity</li>
+    <li>If similarity > threshold (e.g., 0.97): return cached response, skip API call entirely</li>
+    <li>If miss: call API, cache the result with its query embedding</li>
+  </ol>
+  <div class="hint hint-blue">
+    <strong>Cache invalidation:</strong> Semantic caches need TTLs, especially for dynamic data. "What is the status of INC-4521?" cached 2 hours ago is stale. Attach a TTL based on how frequently the underlying data changes. This is the same cache invalidation problem you know from Spring Cache / Redis — same patterns apply.
+  </div>
+  <p><strong>Libraries:</strong> GPTCache (Python), or implement yourself with Redis + your vector store. In Spring AI, you can implement this as a pre-processing Advisor that checks Redis before the LLM call is made.</p>
+
+  <div class="sub-heading">Prompt Caching (Provider-Level)</div>
+  <p>Both Anthropic (Claude) and OpenAI now offer <strong>prompt caching</strong>: if the beginning of your prompt (specifically, the system prompt + few-shot examples) is identical across multiple requests, the provider caches the KV-cache for those tokens. You get 50–90% discount on those cached input tokens. This is automatic — you just structure your prompts so the static parts come first and the dynamic parts (user query, retrieved chunks) come last.</p>
+
+  <div class="key-row">
+    <span class="key-chip">input vs output pricing</span>
+    <span class="key-chip">jtokkit token counting</span>
+    <span class="key-chip">model routing</span>
+    <span class="key-chip">history summarization</span>
+    <span class="key-chip">max_tokens cap</span>
+    <span class="key-chip">semantic caching</span>
+    <span class="key-chip">provider prompt caching</span>
+    <span class="key-chip">system prompt as fixed cost</span>
+  </div>
+</div>
+
+<div class="part-divider" id="p2-code">PART 2 — PRODUCTION CODE &amp; PATTERNS: SPRING AI, KAFKA, SECURITY, PGVECTOR</div>
+
+<!-- ================================================================ -->
+<!-- P2-11: Spring AI RAG Endpoint                                     -->
+<!-- ================================================================ -->
+<div class="section" id="p2-rag">
+  <div class="section-title">11. Spring AI RAG Endpoint — Full Working Code from Scratch <span class="badge badge-orange">LIVE CODING</span></div>
+
+  <div class="sub-heading">What You're Building</div>
+  <p>A complete RAG endpoint in Spring Boot: a user asks a question, the system retrieves the top-5 relevant document chunks from pgvector, injects them into a prompt, and streams the LLM answer back via SSE. This is the most likely live-coding ask in your interview.</p>
+
+  <div class="sub-heading">Step 1 — Maven Dependencies</div>
+  <pre>&lt;dependencies&gt;
+  &lt;!-- Spring AI BOM --&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-openai-spring-boot-starter&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+  &lt;!-- pgvector VectorStore --&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-pgvector-store-spring-boot-starter&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+  &lt;!-- Spring WebFlux for SSE streaming --&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-webflux&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;</pre>
+
+  <div class="sub-heading">Step 2 — application.properties</div>
+  <pre># LLM (swap to azure.openai for SAP BTP AI Core)
+spring.ai.openai.api-key=${OPENAI_API_KEY}
+spring.ai.openai.chat.options.model=gpt-4o
+spring.ai.openai.chat.options.temperature=0.0
+spring.ai.openai.chat.options.max-tokens=1000
+
+# Embedding model
+spring.ai.openai.embedding.options.model=text-embedding-3-small
+
+# pgvector datasource
+spring.datasource.url=jdbc:postgresql://localhost:5432/rag_db
+spring.datasource.username=postgres
+spring.datasource.password=${DB_PASSWORD}
+
+# VectorStore table auto-created on startup
+spring.ai.vectorstore.pgvector.initialize-schema=true
+spring.ai.vectorstore.pgvector.dimensions=1536
+spring.ai.vectorstore.pgvector.distance-type=COSINE_DISTANCE</pre>
+
+  <div class="sub-heading">Step 3 — Configuration Bean: ChatClient with RAG Advisor</div>
+  <pre>@Configuration
+public class AiConfig {
+
+    // Spring AI auto-wires ChatModel and VectorStore from application.properties
+    @Bean
+    public ChatClient ragChatClient(ChatClient.Builder builder,
+                                     VectorStore vectorStore) {
+        return builder
+            .defaultSystem("""
+                You are a helpful SAP BTP assistant.
+                Answer ONLY using the provided context documents.
+                If the answer is not in the context, say: "I don't have
+                information about this in my knowledge base."
+                Be concise and factual.
+                """)
+            .defaultAdvisors(
+                // This single advisor does: embed query → vector search → inject chunks
+                new QuestionAnswerAdvisor(
+                    vectorStore,
+                    SearchRequest.defaults()
+                        .withTopK(5)                        // retrieve top 5 chunks
+                        .withSimilarityThreshold(0.70)      // ignore weak matches
+                )
+            )
+            .build();
+    }
+}</pre>
+
+  <div class="sub-heading">Step 4 — RAG Controller (Blocking + Streaming)</div>
+  <pre>@RestController
+@RequestMapping("/api/ai")
+public class RagController {
+
+    private final ChatClient chatClient;
+
+    public RagController(ChatClient ragChatClient) {
+        this.chatClient = ragChatClient;
+    }
+
+    // ── Blocking endpoint ──────────────────────────────────────────────
+    @GetMapping("/ask")
+    public String ask(@RequestParam String question) {
+        return chatClient.prompt()
+            .user(question)
+            .call()
+            .content();   // blocks until full response
+    }
+
+    // ── Streaming SSE endpoint ─────────────────────────────────────────
+    @GetMapping(value = "/ask/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux&lt;String&gt; askStream(@RequestParam String question) {
+        return chatClient.prompt()
+            .user(question)
+            .stream()
+            .content();   // Flux&lt;String&gt; — token by token
+    }
+
+    // ── Structured output (returns a POJO, not raw text) ───────────────
+    @GetMapping("/analyze")
+    public IncidentAnalysis analyze(@RequestParam String logSnippet) {
+        return chatClient.prompt()
+            .user("Analyze this log and extract: severity, root_cause, suggested_fix.\n\n" + logSnippet)
+            .call()
+            .entity(IncidentAnalysis.class);  // BeanOutputConverter auto-handles JSON schema + parsing
+    }
+}
+
+// POJO for structured output
+record IncidentAnalysis(String severity, String rootCause, String suggestedFix) {}</pre>
+
+  <div class="sub-heading">Step 5 — Document Ingestion (Index Your Knowledge Base)</div>
+  <pre>@Service
+public class DocumentIngestionService {
+
+    private final VectorStore vectorStore;
+    private final ResourceLoader resourceLoader;
+
+    // Call this once at startup or via a batch job to index your documents
+    public void ingestDocuments() {
+        // Load documents (PDF, text, markdown...)
+        Resource resource = resourceLoader.getResource("classpath:runbooks/");
+        var loader = new TextReader(resource);
+        List&lt;Document&gt; rawDocs = loader.get();
+
+        // Chunk: split into smaller pieces before embedding
+        var splitter = new TokenTextSplitter(
+            512,   // chunk size in tokens
+            50,    // overlap between chunks
+            5,     // min chunk size
+            10000, // max total tokens
+            true   // keep separators
+        );
+        List&lt;Document&gt; chunks = splitter.apply(rawDocs);
+
+        // Add metadata for filtering later
+        chunks.forEach(doc -&gt; {
+            doc.getMetadata().put("source", "runbook");
+            doc.getMetadata().put("ingested_at", Instant.now().toString());
+        });
+
+        // Embed + store — Spring AI calls embedding API and writes to pgvector
+        vectorStore.add(chunks);
+        log.info("Ingested {} chunks into vector store", chunks.size());
+    }
+}</pre>
+
+  <div class="hint hint-green">
+    <strong>Interviewer follow-up: "How would you re-index when documents change?"</strong> Use a Kafka consumer or a webhook. When a document is updated, publish an event. A consumer deletes old chunks (filter by <code>doc_id</code> metadata) and re-indexes the new version. This keeps the knowledge base eventually consistent without full re-indexing.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">QuestionAnswerAdvisor</span>
+    <span class="key-chip">SearchRequest.withTopK(5)</span>
+    <span class="key-chip">similarityThreshold(0.70)</span>
+    <span class="key-chip">Flux SSE streaming</span>
+    <span class="key-chip">BeanOutputConverter</span>
+    <span class="key-chip">TokenTextSplitter</span>
+    <span class="key-chip">vectorStore.add(chunks)</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P2-12: Streaming + Function Calling                               -->
+<!-- ================================================================ -->
+<div class="section" id="p2-streaming">
+  <div class="section-title">12. Streaming + Function Calling in Java — Complete Patterns <span class="badge badge-orange">LIVE CODING</span></div>
+
+  <div class="sub-heading">Function Calling — Registering a Java Method as a Tool</div>
+  <pre>// Step 1: Define the function as a @Bean
+@Configuration
+public class ToolConfig {
+
+    @Bean
+    @Description("Get the current status, severity, and assigned team for a cloud incident by its ID")
+    public Function&lt;IncidentRequest, IncidentResponse&gt; getIncidentStatus(
+            IncidentRepository repo) {
+        return request -&gt; {
+            Incident inc = repo.findById(request.incidentId())
+                .orElseThrow(() -&gt; new NotFoundException("Incident not found: " + request.incidentId()));
+            return new IncidentResponse(inc.getStatus(), inc.getSeverity(), inc.getTeam());
+        };
+    }
+
+    @Bean
+    @Description("List all open incidents for a given service name")
+    public Function&lt;ServiceRequest, List&lt;IncidentSummary&gt;&gt; listOpenIncidents(
+            IncidentRepository repo) {
+        return request -&gt; repo.findOpenByService(request.serviceName())
+            .stream()
+            .map(i -&gt; new IncidentSummary(i.getId(), i.getSeverity()))
+            .toList();
+    }
+}
+
+// Input/output records (Spring AI generates JSON schema from these automatically)
+record IncidentRequest(String incidentId) {}
+record IncidentResponse(String status, String severity, String team) {}
+record ServiceRequest(String serviceName) {}
+record IncidentSummary(String id, String severity) {}</pre>
+
+  <pre>// Step 2: Pass tool bean names to ChatClient — LLM decides when to call them
+@GetMapping("/incident-chat")
+public String incidentChat(@RequestParam String question) {
+    return chatClient.prompt()
+        .user(question)
+        .functions("getIncidentStatus", "listOpenIncidents")  // register by bean name
+        .call()
+        .content();
+}
+// User: "What is the status of INC-4521?"
+// LLM sees descriptions → decides to call getIncidentStatus("INC-4521") → gets result → answers</pre>
+
+  <div class="sub-heading">Parallel Tool Calls + Streaming Combined</div>
+  <pre>// Streaming with tools — LLM streams text AND calls tools mid-stream
+@GetMapping(value = "/incident-analysis/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+public Flux&lt;String&gt; streamWithTools(@RequestParam String question) {
+    return chatClient.prompt()
+        .user(question)
+        .functions("getIncidentStatus", "listOpenIncidents", "getServiceHealth")
+        .stream()
+        .content();
+    // Spring AI handles tool execution mid-stream automatically:
+    // 1. LLM requests tool call → Spring AI pauses stream
+    // 2. Executes your Java function
+    // 3. Feeds result back to LLM
+    // 4. Resumes streaming to client
+    // Client sees seamless token stream throughout
+}</pre>
+
+  <div class="hint hint-blue">
+    <strong>How Spring AI handles tool execution under the hood:</strong> When <code>finish_reason</code> is <code>tool_calls</code> in the API response, Spring AI intercepts it, looks up the bean by name, calls your Java function with the deserialized arguments, and makes another API call with the tool result appended — all transparent to your code. This is the "gateway pattern" — you write the backend function, Spring AI writes the gateway orchestration.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">@Description annotation</span>
+    <span class="key-chip">.functions("beanName")</span>
+    <span class="key-chip">auto JSON schema from records</span>
+    <span class="key-chip">finish_reason: tool_calls</span>
+    <span class="key-chip">mid-stream tool execution</span>
+    <span class="key-chip">parallel tool calls</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P2-13: Kafka + AI Integration                                     -->
+<!-- ================================================================ -->
+<div class="section" id="p2-kafka">
+  <div class="section-title">13. Kafka + AI Integration Patterns — Your Biggest Differentiator <span class="badge badge-green">YOUR STRENGTH</span></div>
+
+  <div class="sub-heading">Why Kafka + AI Is a Natural Fit</div>
+  <p>You have Kafka experience. Most AI candidates don't. This is a genuine differentiator — use it. The core idea: AI inference is slow (1–10 seconds per call). You never want AI calls in the synchronous request path for high-throughput systems. Kafka decouples the trigger from the AI processing, exactly as it decouples any fast producer from a slow consumer.</p>
+
+  <div class="sub-heading">Pattern 1 — Async AI Processing Pipeline</div>
+  <pre>// Producer: receive event, publish to Kafka — returns immediately
+@RestController
+public class LogIngestionController {
+
+    private final KafkaTemplate&lt;String, LogEvent&gt; kafkaTemplate;
+
+    @PostMapping("/logs")
+    public ResponseEntity&lt;String&gt; ingestLog(@RequestBody LogEvent event) {
+        kafkaTemplate.send("raw-logs", event.serviceId(), event);
+        return ResponseEntity.accepted().body("Log queued for analysis");
+        // HTTP returns in &lt;1ms — AI processing happens asynchronously
+    }
+}
+
+// Consumer: pull from Kafka, call AI, publish result
+@Service
+public class LogAnalysisConsumer {
+
+    private final ChatClient chatClient;
+    private final KafkaTemplate&lt;String, TriageResult&gt; resultTemplate;
+
+    @KafkaListener(topics = "raw-logs", groupId = "ai-triage-group")
+    public void analyzeLog(LogEvent event) {
+        // Only send ERROR/WARN to AI — cheap pre-filter
+        if (event.level().equals("DEBUG") || event.level().equals("INFO")) return;
+
+        String prompt = """
+            Analyze this cloud log entry. Return JSON with fields:
+            severity (P1/P2/P3/P4), rootCauseSummary, suggestedAction, affectedService.
+
+            Log: %s
+            """.formatted(event.message());
+
+        TriageResult result = chatClient.prompt()
+            .user(prompt)
+            .call()
+            .entity(TriageResult.class);   // structured output via BeanOutputConverter
+
+        resultTemplate.send("triage-results", event.serviceId(), result);
+    }
+}</pre>
+
+  <div class="sub-heading">Pattern 2 — Kafka Streams for Pre-filtering Before AI</div>
+  <pre>// Kafka Streams topology: filter + enrich before AI consumer sees it
+// This saves AI API costs — only novel errors reach the LLM
+@Bean
+public KStream&lt;String, LogEvent&gt; aiFilterTopology(StreamsBuilder builder) {
+    KStream&lt;String, LogEvent&gt; allLogs = builder.stream("raw-logs");
+
+    // Branch 1: known error patterns → direct playbook, no AI needed
+    KStream&lt;String, LogEvent&gt;[] branches = allLogs.branch(
+        (key, log) -&gt; isKnownPattern(log),   // OOM, connection timeout, etc.
+        (key, log) -&gt; true                    // everything else → AI
+    );
+
+    branches[0].to("known-errors");    // handled by rules engine
+    branches[1].to("ai-triage-queue"); // sent to LLM consumer
+
+    return branches[1];
+}
+
+private boolean isKnownPattern(LogEvent log) {
+    return log.message().contains("OutOfMemoryError")
+        || log.message().contains("Connection refused")
+        || log.message().contains("SocketTimeoutException");
+}</pre>
+
+  <div class="sub-heading">Pattern 3 — RAG Knowledge Base Updates via Kafka</div>
+  <pre>// When a runbook document is updated, re-index it via Kafka event
+@KafkaListener(topics = "document-updates", groupId = "rag-indexer-group")
+public void reindexDocument(DocumentUpdateEvent event) {
+    // 1. Delete old chunks for this document
+    vectorStore.delete(
+        List.of(new Filter.Expression(
+            Filter.ExpressionType.EQ,
+            new Filter.Key("doc_id"),
+            new Filter.Value(event.docId())
+        ))
+    );
+
+    // 2. Load, chunk, and re-embed the new version
+    String content = documentRepository.getContent(event.docId());
+    List&lt;Document&gt; chunks = splitter.apply(List.of(new Document(content,
+        Map.of("doc_id", event.docId(), "version", event.version())
+    )));
+    vectorStore.add(chunks);
+    log.info("Re-indexed doc {} v{} — {} chunks", event.docId(), event.version(), chunks.size());
+}</pre>
+
+  <div class="hint hint-blue">
+    <strong>Interview framing:</strong> "In my current SAP role, I use Kafka for async event-driven communication between microservices. For AI workloads, the same pattern applies — AI inference is just another slow consumer. Kafka gives you backpressure, retry, replay, and dead-letter queues for free. I'd never put an LLM call in a synchronous HTTP path for anything at scale."
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">@KafkaListener</span>
+    <span class="key-chip">async AI processing</span>
+    <span class="key-chip">KafkaTemplate result topic</span>
+    <span class="key-chip">Kafka Streams pre-filter</span>
+    <span class="key-chip">document re-indexing event</span>
+    <span class="key-chip">dead-letter queue for AI failures</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P2-14: Spring Security + XSUAA                                    -->
+<!-- ================================================================ -->
+<div class="section" id="p2-security">
+  <div class="section-title">14. Spring Security + XSUAA — Securing AI Endpoints on SAP BTP <span class="badge badge-blue">BTP SPECIFIC</span></div>
+
+  <div class="sub-heading">What XSUAA Is</div>
+  <p>XSUAA (Extended Services for User Account and Authentication) is SAP BTP's OAuth 2.0 authorization server. It's the SAP-managed equivalent of Keycloak or Auth0. Every BTP application uses XSUAA for authentication. Your Spring Boot app is an OAuth2 Resource Server — it validates JWT tokens issued by XSUAA on every request.</p>
+
+  <div class="sub-heading">Dependency Setup</div>
+  <pre>&lt;dependency&gt;
+  &lt;groupId&gt;com.sap.cloud.security.xsuaa&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-security-starter&lt;/artifactId&gt;
+  &lt;version&gt;3.3.x&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+
+  <div class="sub-heading">Security Configuration — RBAC on AI Endpoints</div>
+  <pre>@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)  // stateless API, no CSRF needed
+            .sessionManagement(s -&gt; s.sessionCreationPolicy(STATELESS))
+            .authorizeHttpRequests(auth -&gt; auth
+                // Public health check
+                .requestMatchers("/actuator/health").permitAll()
+                // AI chat endpoint — requires AI_USER scope in XSUAA token
+                .requestMatchers("/api/ai/**").hasAuthority("SCOPE_AI_USER")
+                // Admin: re-index documents — requires AI_ADMIN scope
+                .requestMatchers("/api/admin/reindex").hasAuthority("SCOPE_AI_ADMIN")
+                .anyRequest().authenticated()
+            )
+            // XSUAA token validator — replaces standard JWT decoder
+            .oauth2ResourceServer(oauth2 -&gt; oauth2
+                .jwt(jwt -&gt; jwt.jwtAuthenticationConverter(xsuaaJwtConverter()))
+            );
+        return http.build();
+    }
+
+    @Bean
+    public Converter&lt;Jwt, AbstractAuthenticationToken&gt; xsuaaJwtConverter() {
+        // SAP's converter maps XSUAA scopes to Spring Security authorities
+        return new XsuaaJwtAuthenticationConverter();
+    }
+}</pre>
+
+  <div class="sub-heading">xs-security.json — Defining Scopes in XSUAA</div>
+  <pre>// xs-security.json (committed to your BTP project, bound to XSUAA service instance)
+{
+  "xsappname": "my-ai-app",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.AI_USER",
+      "description": "Can call AI chat and RAG endpoints"
+    },
+    {
+      "name": "$XSAPPNAME.AI_ADMIN",
+      "description": "Can trigger document re-indexing and model config changes"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "AI_User",
+      "scope-references": ["$XSAPPNAME.AI_USER"]
+    },
+    {
+      "name": "AI_Admin",
+      "scope-references": ["$XSAPPNAME.AI_USER", "$XSAPPNAME.AI_ADMIN"]
+    }
+  ]
+}</pre>
+
+  <div class="sub-heading">Extracting User Context in Controllers</div>
+  <pre>@GetMapping("/api/ai/ask")
+public Flux&lt;String&gt; ask(@RequestParam String question,
+                         @AuthenticationPrincipal Jwt jwt) {
+    // Extract user info from XSUAA token for audit logging or tenant isolation
+    String userId = jwt.getClaimAsString("user_name");
+    String tenant = jwt.getClaimAsString("zid");  // zone ID = tenant ID in XSUAA
+
+    log.info("AI request from user={} tenant={}", userId, tenant);
+
+    // For multi-tenant: filter vector search to this tenant's data only
+    SearchRequest searchReq = SearchRequest.defaults()
+        .withTopK(5)
+        .withFilterExpression("tenant_id == '" + tenant + "'");
+
+    return chatClient.prompt()
+        .user(question)
+        .advisors(new QuestionAnswerAdvisor(vectorStore, searchReq))
+        .stream()
+        .content();
+}</pre>
+
+  <div class="hint hint-green">
+    <strong>Multi-tenancy pattern:</strong> Tag every document chunk with <code>tenant_id</code> metadata at ingestion time. At query time, filter the vector search by <code>tenant_id == jwt.zid</code>. This ensures one tenant's documents are never retrieved for another tenant's queries — data isolation without separate vector DB instances.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">XSUAA</span>
+    <span class="key-chip">OAuth2 Resource Server</span>
+    <span class="key-chip">SCOPE_AI_USER</span>
+    <span class="key-chip">XsuaaJwtAuthenticationConverter</span>
+    <span class="key-chip">xs-security.json</span>
+    <span class="key-chip">tenant_id filter</span>
+    <span class="key-chip">multi-tenancy via metadata</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P2-15: pgvector + Ingestion Pipeline                              -->
+<!-- ================================================================ -->
+<div class="section" id="p2-pgvector">
+  <div class="section-title">15. pgvector Setup + Full Ingestion Pipeline in Java <span class="badge badge-blue">STORAGE</span></div>
+
+  <div class="sub-heading">What pgvector Creates in PostgreSQL</div>
+  <pre>-- Spring AI auto-creates this table (spring.ai.vectorstore.pgvector.initialize-schema=true)
+CREATE TABLE IF NOT EXISTS vector_store (
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    content     TEXT NOT NULL,                -- the original chunk text
+    metadata    JSONB,                         -- source, doc_id, tenant_id, etc.
+    embedding   VECTOR(1536)                   -- float[] from text-embedding-3-small
+);
+
+-- HNSW index for fast ANN search (created by Spring AI automatically)
+CREATE INDEX ON vector_store
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
+
+-- Metadata index for filtered search (create manually for performance)
+CREATE INDEX ON vector_store USING GIN (metadata jsonb_path_ops);</pre>
+
+  <div class="sub-heading">Manual pgvector Operations (when you need raw SQL control)</div>
+  <pre>// Custom repository when Spring AI VectorStore isn't flexible enough
+@Repository
+public class VectorRepository {
+
+    private final JdbcTemplate jdbc;
+    private final EmbeddingModel embeddingModel;
+
+    // Similarity search with metadata filter — raw SQL for full control
+    public List&lt;ChunkResult&gt; searchByTenant(String query, String tenantId, int topK) {
+        float[] queryEmbedding = embeddingModel.embed(query);
+        String pgVector = Arrays.toString(queryEmbedding)
+            .replace("[", "[").replace("]", "]"); // format as pgvector literal
+
+        return jdbc.query("""
+            SELECT content, metadata,
+                   1 - (embedding &lt;=&gt; ?::vector) AS similarity
+            FROM vector_store
+            WHERE metadata->>'tenant_id' = ?
+              AND 1 - (embedding &lt;=&gt; ?::vector) > 0.70
+            ORDER BY embedding &lt;=&gt; ?::vector
+            LIMIT ?
+            """,
+            (rs, row) -&gt; new ChunkResult(
+                rs.getString("content"),
+                rs.getString("metadata"),
+                rs.getDouble("similarity")
+            ),
+            pgVector, tenantId, pgVector, pgVector, topK
+        );
+    }
+}
+// &lt;=&gt; is pgvector's cosine distance operator (0 = identical, 2 = opposite)
+// 1 - distance = similarity (1 = identical)</pre>
+
+  <div class="sub-heading">Batch Ingestion for Large Document Sets</div>
+  <pre>@Service
+public class BatchIngestionService {
+
+    private final VectorStore vectorStore;
+    private final TokenTextSplitter splitter = new TokenTextSplitter(512, 50, 5, 10000, true);
+
+    // Process 10,000 documents efficiently
+    public void ingestBatch(List&lt;Path&gt; documentPaths) {
+        // Process in batches of 100 to avoid OOM and rate-limit embedding API
+        Flux.fromIterable(documentPaths)
+            .buffer(100)                          // batch of 100 files
+            .flatMap(batch -&gt; Mono.fromCallable(() -&gt; processBatch(batch))
+                .subscribeOn(Schedulers.boundedElastic())
+            )
+            .doOnNext(count -&gt; log.info("Ingested batch of {} chunks", count))
+            .blockLast();
+    }
+
+    private int processBatch(List&lt;Path&gt; paths) {
+        List&lt;Document&gt; chunks = paths.stream()
+            .flatMap(path -&gt; {
+                String text = Files.readString(path);
+                String docId = path.getFileName().toString();
+                var doc = new Document(text, Map.of(
+                    "doc_id", docId,
+                    "source", path.toString(),
+                    "ingested_at", Instant.now().toString()
+                ));
+                return splitter.apply(List.of(doc)).stream();
+            })
+            .toList();
+
+        vectorStore.add(chunks);     // Spring AI embeds + stores in one call
+        return chunks.size();
+    }
+}</pre>
+
+  <div class="hint">
+    <strong>Rate limiting the embedding API:</strong> OpenAI's embedding endpoint has a rate limit (e.g., 3,000 RPM for text-embedding-3-small). For large ingestion jobs, add a <code>RateLimiter</code> (Resilience4j) or use the <code>buffer()</code> + delay pattern in Reactor to stay under the limit. Spring AI does not throttle automatically.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">VECTOR(1536) column</span>
+    <span class="key-chip">hnsw index</span>
+    <span class="key-chip">&lt;=&gt; cosine distance operator</span>
+    <span class="key-chip">metadata JSONB</span>
+    <span class="key-chip">batch ingestion</span>
+    <span class="key-chip">Resilience4j rate limiter</span>
+    <span class="key-chip">Flux.buffer(100)</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P2-16: Error Handling & Retry                                     -->
+<!-- ================================================================ -->
+<div class="section" id="p2-errors">
+  <div class="section-title">16. Error Handling &amp; Retry Logic for LLM Calls — Production Reality <span class="badge badge-orange">PRODUCTION CRITICAL</span></div>
+
+  <div class="sub-heading">What Can Go Wrong with LLM API Calls</div>
+  <table class="comp">
+    <thead><tr><th>Error</th><th>HTTP Code</th><th>Cause</th><th>Strategy</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rate limit exceeded</strong></td><td>429</td><td>Too many requests per minute/day</td><td>Exponential backoff + retry (up to 3x)</td></tr>
+      <tr><td><strong>Context length exceeded</strong></td><td>400</td><td>Prompt + completion exceeds context window</td><td>Truncate history or retrieved chunks — do NOT retry as-is</td></tr>
+      <tr><td><strong>Service unavailable</strong></td><td>503</td><td>OpenAI/Azure outage</td><td>Retry + fallback to cheaper model</td></tr>
+      <tr><td><strong>Invalid request</strong></td><td>400</td><td>Malformed tool schema or bad parameters</td><td>Log + fail fast — retrying won't help</td></tr>
+      <tr><td><strong>Output parse failure</strong></td><td>200 but bad output</td><td>LLM didn't follow JSON schema</td><td>Retry with stricter prompt (up to 3x)</td></tr>
+      <tr><td><strong>Timeout</strong></td><td>—</td><td>LLM taking too long (complex prompt)</td><td>Timeout after 30s, return partial or fallback message</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-heading">Resilience4j — Retry + Circuit Breaker for LLM Calls</div>
+  <pre>@Configuration
+public class LlmResilienceConfig {
+
+    @Bean
+    public RetryRegistry retryRegistry() {
+        RetryConfig config = RetryConfig.custom()
+            .maxAttempts(3)
+            .waitDuration(Duration.ofSeconds(2))
+            // Exponential backoff: 2s → 4s → 8s
+            .intervalFunction(IntervalFunction.ofExponentialBackoff(2000, 2))
+            // Only retry on rate limit (429) and server errors (5xx)
+            .retryOnException(e -&gt; e instanceof OpenAiApiException api
+                &amp;&amp; (api.statusCode() == 429 || api.statusCode() &gt;= 500))
+            // Don't retry on bad requests — they'll keep failing
+            .ignoreExceptions(BadRequestException.class)
+            .build();
+        return RetryRegistry.of(config);
+    }
+
+    @Bean
+    public CircuitBreakerRegistry circuitBreakerRegistry() {
+        CircuitBreakerConfig config = CircuitBreakerConfig.custom()
+            .failureRateThreshold(50)           // open if 50% of calls fail
+            .waitDurationInOpenState(Duration.ofSeconds(30))
+            .slidingWindowSize(10)
+            .build();
+        return CircuitBreakerRegistry.of(config);
+    }
+}</pre>
+
+  <pre>@Service
+public class ResilientChatService {
+
+    private final ChatClient chatClient;
+    private final Retry retry;
+    private final CircuitBreaker circuitBreaker;
+
+    public String askWithResilience(String question) {
+        Supplier&lt;String&gt; llmCall = () -&gt; chatClient.prompt()
+            .user(question)
+            .call()
+            .content();
+
+        // Wrap: circuit breaker → retry → actual call
+        return Decorators.ofSupplier(llmCall)
+            .withCircuitBreaker(circuitBreaker)
+            .withRetry(retry)
+            .withFallback(
+                List.of(CallNotPermittedException.class),  // circuit open
+                e -&gt; "Service temporarily unavailable. Please try again in 30 seconds."
+            )
+            .decorate()
+            .get();
+    }
+}</pre>
+
+  <div class="sub-heading">Output Validation with Retry</div>
+  <pre>@Service
+public class ValidatedChatService {
+
+    private final ChatClient chatClient;
+
+    public IncidentAnalysis analyzeWithRetry(String log) {
+        int attempts = 0;
+        while (attempts &lt; 3) {
+            try {
+                IncidentAnalysis result = chatClient.prompt()
+                    .user(buildPrompt(log, attempts))  // stricter prompt on retry
+                    .call()
+                    .entity(IncidentAnalysis.class);   // throws if JSON invalid
+
+                // Semantic validation — don't trust the model blindly
+                if (result.severity() == null || result.rootCause() == null) {
+                    throw new IncompleteOutputException("Missing required fields");
+                }
+                return result;
+
+            } catch (Exception e) {
+                attempts++;
+                log.warn("LLM output validation failed (attempt {}): {}", attempts, e.getMessage());
+                if (attempts == 3) throw new LlmAnalysisException("Failed after 3 attempts", e);
+            }
+        }
+        throw new LlmAnalysisException("Unreachable");
+    }
+
+    private String buildPrompt(String log, int attempt) {
+        String strictness = attempt == 0 ? "" :
+            attempt == 1 ? "\nIMPORTANT: You MUST return valid JSON only. No prose." :
+            "\nCRITICAL: Return ONLY this JSON structure, nothing else: {\"severity\":\"P1\",\"rootCause\":\"...\",\"suggestedFix\":\"...\"}";
+        return "Analyze this log:\n" + log + strictness;
+    }
+}</pre>
+
+  <div class="key-row">
+    <span class="key-chip">429 exponential backoff</span>
+    <span class="key-chip">CircuitBreaker 50% threshold</span>
+    <span class="key-chip">Resilience4j Decorators</span>
+    <span class="key-chip">output validation retry</span>
+    <span class="key-chip">stricter prompt on retry</span>
+    <span class="key-chip">fallback message</span>
+  </div>
+</div>
+
+
+<div class="part-divider" id="p3-testing">PART 3 — TESTING, DEPLOYMENT &amp; SCALE</div>
+
+
+<!-- ================================================================ -->
+<!-- P3-17: Testing AI Components                                      -->
+<!-- ================================================================ -->
+<div class="section" id="p3-testing">
+  <div class="section-title">17. Testing AI Components — Mocking LLMs, RAG Evaluation, RAGAS <span class="badge badge-blue">T2 EXPECTED</span></div>
+
+  <div class="sub-heading">The Testing Problem with LLMs</div>
+  <p>LLM calls are: slow (2–10s), expensive ($0.01+ per call), non-deterministic (same input → different output), and dependent on external APIs. You cannot run 500 unit tests against the real OpenAI API. You need a layered testing strategy.</p>
+
+  <div class="sub-heading">Layer 1 — Unit Tests: Mock the ChatClient</div>
+  <pre>@ExtendWith(MockitoExtension.class)
+class RagControllerTest {
+
+    @Mock
+    private ChatClient chatClient;
+
+    @Mock
+    private ChatClient.ChatClientRequestSpec requestSpec;
+
+    @Mock
+    private ChatClient.CallResponseSpec callSpec;
+
+    @InjectMocks
+    private RagController controller;
+
+    @Test
+    void ask_returnsLlmResponse() {
+        // Arrange: mock the fluent chain
+        when(chatClient.prompt()).thenReturn(requestSpec);
+        when(requestSpec.user(anyString())).thenReturn(requestSpec);
+        when(requestSpec.call()).thenReturn(callSpec);
+        when(callSpec.content()).thenReturn("The incident INC-4521 is P1 active.");
+
+        // Act
+        String result = controller.ask("What is the status of INC-4521?");
+
+        // Assert
+        assertThat(result).contains("P1");
+        verify(chatClient).prompt();
+    }
+
+    @Test
+    void ask_handlesLlmException_gracefully() {
+        when(chatClient.prompt()).thenThrow(new RuntimeException("OpenAI 503"));
+
+        assertThatThrownBy(() -&gt; controller.ask("test question"))
+            .isInstanceOf(LlmServiceException.class)
+            .hasMessageContaining("temporarily unavailable");
+    }
+}</pre>
+
+  <div class="sub-heading">Layer 2 — Integration Tests: Use Ollama or WireMock</div>
+  <pre>// Option A: Ollama (local LLM) — real model, no API cost, deterministic-ish
+// application-test.properties:
+// spring.ai.ollama.base-url=http://localhost:11434
+// spring.ai.ollama.chat.options.model=llama3.2:3b
+
+@SpringBootTest
+@ActiveProfiles("test")
+class RagIntegrationTest {
+
+    @Autowired
+    private RagController controller;
+
+    @Test
+    void rag_retrievesRelevantContext() {
+        // This calls Ollama locally — real embedding + real vector search
+        String result = controller.ask("How do I resolve an OOM error in Cloud Foundry?");
+        // Don't assert exact text (non-deterministic) — assert structure/intent
+        assertThat(result).isNotBlank();
+        assertThat(result.toLowerCase()).containsAnyOf("memory", "heap", "jvm", "restart");
+    }
+}
+
+// Option B: WireMock — stub OpenAI responses for deterministic tests
+@WireMockTest(httpPort = 8089)
+class ChatClientWireMockTest {
+
+    @Test
+    void callsOpenAI_withCorrectPayload(WireMockRuntimeInfo wm) {
+        stubFor(post(urlEqualTo("/v1/chat/completions"))
+            .willReturn(okJson("""
+                {"choices":[{"message":{"role":"assistant","content":"P1 incident, root cause: OOM"},
+                "finish_reason":"stop"}],"usage":{"prompt_tokens":150,"completion_tokens":20}}
+                """)));
+
+        // ... call your service, assert it sent correct request and handled response
+        verify(postRequestedFor(urlEqualTo("/v1/chat/completions"))
+            .withRequestBody(matchingJsonPath("$.model", equalTo("gpt-4o"))));
+    }
+}</pre>
+
+  <div class="sub-heading">Layer 3 — RAG Evaluation: Is Retrieval Actually Working?</div>
+  <p>Unit tests don't tell you if your RAG is retrieving the <em>right</em> chunks. Use these metrics:</p>
+  <table class="comp">
+    <thead><tr><th>Metric</th><th>What It Measures</th><th>How to Compute</th><th>Good Score</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Context Recall</strong></td><td>Are the correct chunks being retrieved?</td><td>Ground truth chunks ∩ retrieved chunks / ground truth chunks</td><td>&gt; 0.8</td></tr>
+      <tr><td><strong>Answer Faithfulness</strong></td><td>Does the answer stick to the retrieved context?</td><td>LLM judge: "Is every claim in the answer supported by the context?"</td><td>&gt; 0.85</td></tr>
+      <tr><td><strong>Answer Relevance</strong></td><td>Does the answer actually address the question?</td><td>Cosine similarity between question embedding and answer embedding</td><td>&gt; 0.8</td></tr>
+      <tr><td><strong>Context Precision</strong></td><td>Are retrieved chunks relevant (no noise)?</td><td>Relevant chunks retrieved / total chunks retrieved</td><td>&gt; 0.75</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hint hint-blue">
+    <strong>RAGAS framework (Python):</strong> RAGAS automates all four metrics using LLM-as-judge. You provide a test dataset (question, ground_truth_answer, ground_truth_context_docs), run your RAG pipeline, and RAGAS scores every metric. Run it periodically (CI or weekly) — a drop in context recall means your chunking or retrieval config regressed.
+  </div>
+
+  <div class="sub-heading">Prompt Versioning — Managing Prompts Like Code</div>
+  <pre>// Store prompts in your database or config, not hardcoded in Java
+@Entity
+public class PromptTemplate {
+    @Id private String name;       // e.g., "rag_system_prompt"
+    private String version;        // e.g., "v3"
+    private String template;       // the actual prompt text
+    private boolean active;        // only one active per name
+    private LocalDateTime updatedAt;
+}
+
+// Load active prompt at runtime — no redeploy needed for prompt changes
+@Service
+public class PromptService {
+    public String getActive(String name) {
+        return promptRepository.findByNameAndActiveTrue(name)
+            .orElseThrow()
+            .getTemplate();
+    }
+}
+
+// A/B test two prompt versions by routing traffic
+// Version "v3" → 90% of users, "v4-experiment" → 10%</pre>
+
+  <div class="key-row">
+    <span class="key-chip">mock ChatClient fluent chain</span>
+    <span class="key-chip">Ollama for integration tests</span>
+    <span class="key-chip">WireMock OpenAI stub</span>
+    <span class="key-chip">RAGAS evaluation</span>
+    <span class="key-chip">context recall</span>
+    <span class="key-chip">answer faithfulness</span>
+    <span class="key-chip">prompt versioning in DB</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P3-18: BTP Deployment                                             -->
+<!-- ================================================================ -->
+<div class="section" id="p3-btp">
+  <div class="section-title">18. SAP BTP Deployment — CF Manifest, XSUAA, AI Core Service Tile, Full Setup <span class="badge badge-blue">BTP SPECIFIC</span></div>
+
+  <div class="sub-heading">BTP Service Architecture for an AI App</div>
+  <p>A production AI app on BTP binds to three service instances: <strong>XSUAA</strong> (authentication), <strong>AI Core</strong> (LLM + embeddings), and <strong>PostgreSQL with pgvector</strong> (vector store). Spring AI reads connection details from the VCAP_SERVICES environment variable that CF injects automatically.</p>
+
+  <div class="sub-heading">manifest.yml — Cloud Foundry Deployment</div>
+  <pre>applications:
+  - name: ai-triage-service
+    memory: 1G
+    disk_quota: 512M
+    instances: 2                       # run 2 instances for HA
+    buildpacks:
+      - java_buildpack
+    path: target/ai-triage-service.jar
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ }}'
+      SPRING_PROFILES_ACTIVE: cloud    # activates cloud-specific config
+    services:
+      - ai-triage-xsuaa              # XSUAA service instance
+      - ai-triage-aicore             # SAP AI Core service instance
+      - ai-triage-postgres           # PostgreSQL with pgvector</pre>
+
+  <div class="sub-heading">Create Service Instances (CF CLI)</div>
+  <pre># XSUAA: OAuth2 authorization server
+cf create-service xsuaa application ai-triage-xsuaa -c xs-security.json
+
+# SAP AI Core: managed LLM + embedding API
+cf create-service aicore standard ai-triage-aicore
+
+# PostgreSQL: for pgvector (hyperscaler option on BTP)
+cf create-service postgresql-db trial ai-triage-postgres
+
+# Push the app
+cf push</pre>
+
+  <div class="sub-heading">application-cloud.properties — Reading Bound Services</div>
+  <pre># Spring AI auto-reads AI Core credentials from VCAP_SERVICES when the
+# spring-ai-azure-openai starter is on classpath + CF binding is present
+# No manual credential config needed — CF injects everything via env vars
+
+# Only thing you configure: which deployment/model to use
+spring.ai.azure.openai.chat.options.deployment-name=gpt-4o
+spring.ai.azure.openai.embedding.options.deployment-name=text-embedding-3-small
+
+# Spring Cloud CF datasource auto-config reads PostgreSQL from VCAP_SERVICES
+# No datasource URL/password needed in properties when bound in CF</pre>
+
+  <div class="sub-heading">AI Core — What It Actually Is on BTP</div>
+  <p>SAP AI Core is BTP's managed AI infrastructure service. It provides: (1) <strong>LLM access</strong> via Azure OpenAI-compatible endpoints for GPT-4o, text-embedding-3-small, and other models, (2) <strong>AI Launchpad</strong> — a UI to manage deployments, view metrics, monitor costs, (3) <strong>Model training</strong> infrastructure for custom fine-tuning, (4) <strong>Data residency</strong> — models run in SAP-managed Azure regions, satisfying data sovereignty requirements.</p>
+
+  <div class="hint hint-green">
+    <strong>Interview answer for "How do you connect to the LLM on BTP?":</strong>
+    "I bind my Spring Boot app to the SAP AI Core service instance in Cloud Foundry. CF injects the Azure OpenAI-compatible endpoint and API key via VCAP_SERVICES. Spring AI reads these automatically — I just configure the model deployment name. The code is identical to calling Azure OpenAI directly; only the base URL and auth token differ."
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">manifest.yml services[]</span>
+    <span class="key-chip">VCAP_SERVICES</span>
+    <span class="key-chip">cf create-service xsuaa</span>
+    <span class="key-chip">AI Core deployment name</span>
+    <span class="key-chip">spring-profiles-active: cloud</span>
+    <span class="key-chip">AI Launchpad</span>
+    <span class="key-chip">data residency</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P3-19: Scale to 10K Users                                         -->
+<!-- ================================================================ -->
+<div class="section" id="p3-scale">
+  <div class="section-title">19. System Design — Scale an AI App to 10,000 Concurrent Users <span class="badge badge-orange">SYSTEM DESIGN</span></div>
+
+  <div class="sub-heading">The Bottlenecks at Scale (Identify These First)</div>
+  <ol>
+    <li><strong>LLM API rate limits:</strong> OpenAI allows ~10,000 RPM on tier 4. At 10K users each making 1 request/minute, you're at the limit immediately. Solution: async queue + model routing + semantic cache.</li>
+    <li><strong>LLM latency:</strong> Each call takes 1–10s. Synchronous HTTP at scale = thousands of threads blocked. Solution: WebFlux reactive stack (non-blocking I/O) + streaming to keep connections alive.</li>
+    <li><strong>Vector DB query latency:</strong> HNSW search at 10K QPS needs proper indexing and connection pooling. Solution: pgvector with tuned HNSW parameters, HikariCP pool sizing, read replicas.</li>
+    <li><strong>Embedding API calls:</strong> Every unique query needs an embedding before vector search. Solution: semantic cache (skip embedding if cache hit), batch embedding for ingestion.</li>
+    <li><strong>Token costs:</strong> 10K users × 2K tokens/request = 20M tokens/day = significant spend. Solution: model routing, semantic cache, prompt compression.</li>
+  </ol>
+
+  <div class="sub-heading">Architecture at 10K Users</div>
+  <div class="diag-row">
+    <div class="diag-box gray">10K Users<br><small>browser / mobile</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box">API Gateway<br><small>rate limit, auth (XSUAA)</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box orange">Semantic Cache<br><small>Redis + embeddings<br>~30% hit rate</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box purple">Spring Boot (×N)<br><small>WebFlux, reactive<br>CF auto-scale</small></div>
+  </div>
+  <div class="diag-row" style="margin-top:6px">
+    <div class="diag-box green">pgvector<br><small>read replica<br>HNSW index</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box">Model Router<br><small>simple→mini<br>complex→GPT-4o</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box orange">Kafka Queue<br><small>async AI tasks<br>backpressure</small></div>
+    <div class="diag-arrow">→</div>
+    <div class="diag-box red">LLM API<br><small>SAP AI Core<br>rate-limited</small></div>
+  </div>
+
+  <div class="sub-heading">Specific Tuning Decisions</div>
+  <table class="comp">
+    <thead><tr><th>Layer</th><th>Problem</th><th>Solution</th><th>Expected Impact</th></tr></thead>
+    <tbody>
+      <tr><td><strong>HTTP layer</strong></td><td>Thread-per-request won't scale</td><td>Spring WebFlux (Netty) — non-blocking I/O, 1 thread handles thousands of connections</td><td>10× more connections per instance</td></tr>
+      <tr><td><strong>Semantic cache</strong></td><td>Redundant embeddings + LLM calls</td><td>Redis: embed query → cosine search → return cached response if sim &gt; 0.97</td><td>30–50% API call reduction</td></tr>
+      <tr><td><strong>Model routing</strong></td><td>GPT-4o for all tasks is expensive</td><td>Classify request complexity first (cheap call), route simple to mini</td><td>60–70% cost reduction</td></tr>
+      <tr><td><strong>Async queue</strong></td><td>LLM rate limits cause 429 errors at peak</td><td>Kafka queue with consumer-side rate limiting via Resilience4j</td><td>Eliminates 429s, adds latency</td></tr>
+      <tr><td><strong>CF auto-scaling</strong></td><td>Traffic spikes</td><td>CF App Autoscaler: scale out when CPU &gt; 70% or request queue depth &gt; threshold</td><td>Handles 5× traffic spikes</td></tr>
+      <tr><td><strong>pgvector tuning</strong></td><td>Slow vector search at high QPS</td><td>HNSW ef_search=40, connection pool 20/instance, read replica for searches</td><td>Sub-100ms p99 search latency</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-row">
+    <span class="key-chip">WebFlux non-blocking</span>
+    <span class="key-chip">semantic cache 30-50%</span>
+    <span class="key-chip">model routing 60-70% cost</span>
+    <span class="key-chip">Kafka as rate-limit buffer</span>
+    <span class="key-chip">CF App Autoscaler</span>
+    <span class="key-chip">HNSW ef_search tuning</span>
+    <span class="key-chip">read replica pgvector</span>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- P3-20: STAR Story                                                 -->
+<!-- ================================================================ -->
+<div class="section" id="p3-star">
+  <div class="section-title">20. Behavioral — Your RAG Project as a STAR Story <span class="badge badge-green">GUARANTEED ASK</span></div>
+
+  <div class="hint hint-red">
+    <strong>They WILL ask:</strong> "Tell me about a time you built something with AI / ML" or "Describe a project where you used LLMs." Your RAG pipeline is the answer. Have this story ready, cold.
+  </div>
+
+  <div class="sub-heading">Your Project Facts (fill in what's accurate)</div>
+  <ul>
+    <li><strong>Stack:</strong> LangChain + MongoDB Atlas Vector Search + OpenAI text-embedding-3-small + GPT-4o</li>
+    <li><strong>What it does:</strong> RAG pipeline — users ask questions, system retrieves relevant document chunks, LLM answers grounded in retrieved content</li>
+    <li><strong>Your contribution:</strong> Built the full pipeline from scratch — document ingestion, chunking strategy, vector search, prompt design, answer generation</li>
+  </ul>
+
+  <div class="sub-heading">STAR Answer — Say This Out Loud</div>
+  <div class="hint hint-blue">
+    <strong>Situation:</strong> "In a personal project, I wanted to solve a problem I noticed at work — when engineers search for past incident solutions, they do keyword searches on Confluence that often miss relevant content because the keywords don't exactly match. I decided to build a semantic search system that understands the meaning of queries, not just keywords."
+  </div>
+  <div class="hint">
+    <strong>Task:</strong> "I set out to build a RAG pipeline that could answer questions about technical documentation by retrieving the most semantically relevant sections and generating a grounded answer using an LLM — not hallucinating from training data."
+  </div>
+  <div class="hint hint-blue">
+    <strong>Action:</strong> "I used LangChain for orchestration, OpenAI's text-embedding-3-small for embeddings, and MongoDB Atlas Vector Search as the vector store. The pipeline had three stages: first, I chunked documents using recursive character splitting at 512 tokens with 50-token overlap to preserve semantic boundaries. Second, I embedded each chunk and stored it in MongoDB. Third, at query time, I embedded the question, retrieved the top-5 chunks by cosine similarity, and injected them into a GPT-4o prompt with a grounding instruction — 'answer only from the provided context.' I also added a similarity threshold of 0.7 to avoid retrieving irrelevant content."
+  </div>
+  <div class="hint hint-green">
+    <strong>Result:</strong> "The system significantly outperformed keyword search for technical queries — questions like 'how do I fix connection pool exhaustion in CF?' returned the exact runbook section, not just documents containing those words. I learned the critical importance of chunking strategy — my first attempt with 2000-token chunks gave poor retrieval because the retrieved chunk was too broad. Smaller chunks at 512 tokens with overlap gave much better precision. This directly maps to what I'd build here on BTP using Spring AI and pgvector."
+  </div>
+
+  <div class="sub-heading">Follow-up Questions They'll Ask — Have These Ready</div>
+  <table class="comp">
+    <thead><tr><th>Follow-up Question</th><th>Your Answer</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>"What would you do differently?"</td>
+        <td>"I'd add a reranking step — retrieve top-20 chunks with vector search, then use a cross-encoder reranker to get the best 5. Also, hybrid search (vector + BM25 keyword) for better recall on exact technical terms like error codes."</td>
+      </tr>
+      <tr>
+        <td>"How did you measure quality?"</td>
+        <td>"I created a test set of 50 question-answer pairs and measured context recall manually. Later I learned about RAGAS, which automates this with LLM-as-judge scoring for faithfulness, relevance, and recall."</td>
+      </tr>
+      <tr>
+        <td>"How would you productionize this?"</td>
+        <td>"On BTP: migrate from MongoDB to pgvector on PostgreSQL, secure the endpoint with XSUAA and RBAC scopes, add semantic caching in Redis, use SAP AI Core for the LLM calls, and deploy via CF with the manifest binding the services. For high traffic, put LLM calls behind a Kafka queue."</td>
+      </tr>
+      <tr>
+        <td>"How did you handle hallucinations?"</td>
+        <td>"The grounding system prompt was the primary defense — 'answer only from context, say I don't know if not found.' I also set temperature=0 for factual tasks and added a similarity threshold so weak matches weren't injected as context."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="key-row">
+    <span class="key-chip">STAR structure</span>
+    <span class="key-chip">chunking 512 tokens</span>
+    <span class="key-chip">similarity threshold 0.70</span>
+    <span class="key-chip">grounding system prompt</span>
+    <span class="key-chip">RAGAS evaluation</span>
+    <span class="key-chip">productionize on BTP</span>
+  </div>
+</div>
+<div style="background:#f0f6ff; border-top:2px solid #0070f3; padding:10px 24px; font-size:11px; color:#555; text-align:center; margin-top:0;">
+  AI/LLM Engineering Deep Knowledge &nbsp;|&nbsp; Nilesh — SAP BTP Java AI Developer &nbsp;|&nbsp; August 2026
+  &nbsp;|&nbsp; <strong style="color:#0050b3">Core principle:</strong> Every LLM concept maps to something you already know — tokens are lexer output, context windows are message buffers, agents are while-loops, multi-agent = microservices, caching = Redis patterns you've used for years.
+</div>
+
+</body>
+</html>

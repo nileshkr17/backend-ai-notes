@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Stack Java AI Developer — Interview Prep</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a1a; background: #fff; }
+
+  .page-title {
+    text-align: center;
+    padding: 18px 20px 10px;
+    border-bottom: 3px solid #0070f3;
+  }
+  .page-title h1 { font-size: 20px; color: #0070f3; }
+  .page-title p { font-size: 11px; color: #666; margin-top: 4px; }
+
+  .toc {
+    padding: 12px 24px;
+    background: #f0f6ff;
+    border-bottom: 1px solid #cce0ff;
+    font-size: 11.5px;
+  }
+  .toc strong { color: #0050b3; font-size: 12px; }
+  .toc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 20px; margin-top: 6px; }
+  .toc a { color: #0050b3; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  .part-divider {
+    background: #0070f3;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .section {
+    padding: 10px 24px 6px;
+    border-bottom: 1px solid #e8e8e8;
+    break-inside: avoid;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0050b3;
+    background: #e8f0fe;
+    padding: 5px 10px;
+    border-left: 4px solid #0070f3;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .badge {
+    font-size: 10px;
+    background: #ff4500;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  .badge-green  { background: #28a745; }
+  .badge-orange { background: #e67e00; }
+  .badge-blue   { background: #0070f3; }
+  .badge-purple { background: #6f42c1; }
+
+  ol { padding-left: 20px; }
+  ol li { margin-bottom: 5px; line-height: 1.5; }
+  ul { padding-left: 20px; }
+  ul li { margin-bottom: 4px; line-height: 1.5; }
+
+  .hint {
+    font-size: 12px;
+    color: #444;
+    background: #fffbe6;
+    border-left: 3px solid #f0a500;
+    padding: 5px 10px;
+    margin: 4px 0 6px 0;
+    line-height: 1.65;
+  }
+  .hint-blue {
+    background: #f0f6ff;
+    border-left: 3px solid #0070f3;
+    color: #003580;
+  }
+  .hint-green {
+    background: #f0fff4;
+    border-left: 3px solid #28a745;
+    color: #1a4a2a;
+  }
+  .hint-red {
+    background: #fff0f0;
+    border-left: 3px solid #dc3545;
+    color: #7a1010;
+  }
+
+  code {
+    font-family: 'Courier New', monospace;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 11.5px;
+    padding: 1px 4px;
+  }
+  pre {
+    font-family: 'Courier New', monospace;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 11.5px;
+    padding: 8px 12px;
+    margin: 6px 0 4px 0;
+    overflow-x: auto;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 16px; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+
+  .mini-card {
+    background: #f8f9ff;
+    border: 1px solid #d0d8f0;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .mini-card strong { color: #0050b3; }
+
+  /* ── Diagram ── */
+  .diagram {
+    margin: 8px 0 6px;
+    font-size: 12px;
+  }
+  .diag-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+  }
+  .diag-box {
+    background: #e8f0fe;
+    border: 1px solid #a8c0f0;
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #0050b3;
+    flex: 1;
+    min-width: 80px;
+  }
+  .diag-box.orange { background: #fff3e0; border-color: #ffb74d; color: #7a3f00; }
+  .diag-box.green  { background: #f0fff4; border-color: #81c784; color: #1a4a2a; }
+  .diag-box.red    { background: #fff0f0; border-color: #ef9a9a; color: #7a1010; }
+  .diag-box.purple { background: #f3f0ff; border-color: #b39ddb; color: #3a1a70; }
+  .diag-box.gray   { background: #f5f5f5; border-color: #bdbdbd; color: #444; }
+  .diag-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    color: #0070f3;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .diag-arrow.down {
+    flex-direction: column;
+    padding: 2px 0;
+    font-size: 13px;
+  }
+  .diag-label {
+    font-size: 10.5px;
+    color: #777;
+    text-align: center;
+    margin-bottom: 2px;
+    font-style: italic;
+  }
+  .diag-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+  }
+  .diag-col .diag-box { width: 100%; }
+
+  table.comp { width: 100%; border-collapse: collapse; font-size: 12px; margin: 6px 0; }
+  table.comp th { background: #0070f3; color: white; padding: 5px 8px; text-align: left; }
+  table.comp td { padding: 5px 8px; border-bottom: 1px solid #e8e8e8; }
+  table.comp tr:nth-child(even) td { background: #f8f9ff; }
+
+  .key-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 6px 0 4px;
+  }
+  .key-chip {
+    background: #e8f0fe;
+    color: #0050b3;
+    border: 1px solid #b0c8f8;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+  }
+
+  @media (max-width: 600px) {
+    .section { padding: 10px 14px 6px; }
+    .toc-grid { grid-template-columns: repeat(2, 1fr); }
+    .row-3 { grid-template-columns: 1fr; }
+    .row-2 { grid-template-columns: 1fr; }
+    .diag-row { gap: 4px; }
+    .diag-arrow { display: none; }
+  }
+
+  @media print {
+    body { font-size: 12px; }
+    .part-divider { page-break-before: always; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    @page { margin: 12mm 14mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-title">
+  <h1>Full Stack Java AI Developer | Interview Prep</h1>
+  <p>Background: Java · Spring Boot · Kafka · MongoDB · RAG pipeline</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <strong>10 Topics — Mental Model + Interview Answer + Impress Point</strong>
+  <div class="toc-grid">
+    <div><a href="#q1">1. RAG vs Fine-Tuning</a></div>
+    <div><a href="#q2">2. AI Agent &amp; ReAct Pattern</a></div>
+    <div><a href="#q3">3. LangChain vs LangGraph</a></div>
+    <div><a href="#q4">4. Prompt Engineering &amp; Function Calling</a></div>
+    <div><a href="#q5">5. Vector Embeddings &amp; Retrieval</a></div>
+    <div><a href="#q6">6. Spring AI</a></div>
+    <div><a href="#q7">7. Handling Hallucinations in Production</a></div>
+    <div><a href="#q8">8. Token Optimization &amp; Cost Management</a></div>
+    <div><a href="#q9">9. AI Agent for Cloud Incident Triage</a></div>
+    <div><a href="#q10">10. Multi-Agent Orchestration</a></div>
+  </div>
+</div>
+
+<div class="part-divider">10 TOPICS — FULL STACK JAVA AI DEVELOPER</div>
+
+<!-- ============================================================ -->
+<!-- Q1: RAG vs Fine-Tuning                                        -->
+<!-- ============================================================ -->
+<div class="section" id="q1">
+  <div class="section-title">1. What is RAG and why is it better than fine-tuning? <span class="badge badge-orange">HIGH LIKELY</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> Think of RAG like an open-book exam — the model gets to look up answers in real documents before responding. Fine-tuning is like cramming facts into the model's "brain" permanently. Open-book (RAG) is better when facts change; cramming (fine-tuning) is better when you want to change how it writes or behaves.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    RAG — Retrieval-Augmented Generation — means at query time you fetch the most relevant documents from a knowledge base and inject them into the prompt as context. The model answers using that retrieved content, not just its training data. It's better than fine-tuning for factual knowledge because the knowledge base stays up-to-date without retraining. I built a RAG pipeline using LangChain, MongoDB Atlas Vector Search, and OpenAI embeddings — the user question gets embedded, we do a cosine similarity search, retrieve the top chunks, and pass them to the LLM.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> Fine-tuning is still useful — not for injecting facts, but for teaching the model a specific output format or tone. In practice, teams use both: RAG for dynamic knowledge, fine-tuning for consistent behavior. Also, RAG failures are debuggable — you can inspect exactly what chunks were retrieved; fine-tuning failures are a black box.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">RAG</span>
+    <span class="key-chip">vector search</span>
+    <span class="key-chip">cosine similarity</span>
+    <span class="key-chip">fine-tuning</span>
+    <span class="key-chip">knowledge base</span>
+    <span class="key-chip">context injection</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q2: AI Agent & ReAct                                          -->
+<!-- ============================================================ -->
+<div class="section" id="q2">
+  <div class="section-title">2. What is an AI agent? What is the ReAct pattern? <span class="badge badge-orange">HIGH LIKELY</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> A normal LLM answers one question and stops. An agent is an LLM in a loop — it can decide "I need more information", call a tool (search, run code, query a DB), see the result, and keep going until it's done. ReAct = the LLM alternates between <em>Reasoning</em> (what should I do?) and <em>Acting</em> (call a tool), like a person thinking out loud before each step.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    An AI agent is an LLM that can decide what action to take next and loop until a goal is reached. Instead of one-shot generation, it has access to tools — functions it can call — and it keeps reasoning and acting until it has the answer. The ReAct pattern is how agents reason: the model outputs a "Thought" about what to do, then an "Action" like calling a search tool, then an "Observation" from that tool's result, and it loops. This is how LangChain's AgentExecutor works internally.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> The key risk in agents is infinite loops or runaway tool calls. In production you always set a <code>max_iterations</code> limit and a timeout. You also need to think about which tools you give the agent — fewer, well-described tools outperform many vague ones, because the LLM picks tools based purely on their descriptions.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">ReAct</span>
+    <span class="key-chip">Thought → Action → Observation</span>
+    <span class="key-chip">tool calling</span>
+    <span class="key-chip">AgentExecutor</span>
+    <span class="key-chip">max_iterations</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q3: LangChain vs LangGraph                                    -->
+<!-- ============================================================ -->
+<div class="section" id="q3">
+  <div class="section-title">3. What is LangChain? What is LangGraph? What's the difference? <span class="badge badge-orange">HIGH LIKELY</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> LangChain is a toolbox for building LLM pipelines — chains, agents, retrievers, all wired together. LangGraph is what you use when your workflow isn't a straight line — it models the agent as a graph with nodes (steps) and edges (transitions), so you can have loops, branches, and human review checkpoints. LangChain = pipeline. LangGraph = flowchart.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    LangChain is a framework that gives you building blocks for LLM apps — prompt templates, chains, agents, retrievers, memory. LangGraph is built on top of LangChain and adds graph-based control flow: you define nodes (each is a processing step) and edges (transitions between steps, including conditional branches). The key difference is that LangChain's agents are essentially a while-loop, which is hard to control for complex workflows. LangGraph lets you model any flow explicitly — including cycles, parallel branches, and human-in-the-loop pauses — which is why production agent systems use it.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> LangGraph supports "checkpoints" — it can save state at any node and resume from there. This is critical for long-running agents that might time out or need human approval mid-flow. Think of it like a state machine where the LLM drives the transitions.
+  </div>
+
+  <div class="diagram">
+    <div class="diag-label">LangChain — linear chain</div>
+    <div class="diag-row">
+      <div class="diag-box">Input</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box">Prompt Template</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box">LLM</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box">Output Parser</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box green">Response</div>
+    </div>
+    <br>
+    <div class="diag-label">LangGraph — stateful graph with branches</div>
+    <div class="diag-row">
+      <div class="diag-box">Start</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box purple">classify_intent</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box orange">retrieve_context</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box">generate_answer</div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-box red">validate_output</div>
+    </div>
+    <div class="diag-row" style="margin-top:4px; justify-content: flex-end; padding-right: 80px;">
+      <span style="font-size:11px; color:#888; font-style:italic;">↑ if invalid: loop back to generate_answer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">LangChain</span>
+    <span class="key-chip">LangGraph</span>
+    <span class="key-chip">nodes / edges</span>
+    <span class="key-chip">state machine</span>
+    <span class="key-chip">checkpoints</span>
+    <span class="key-chip">human-in-the-loop</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q4: Prompt Engineering & Function Calling                     -->
+<!-- ============================================================ -->
+<div class="section" id="q4">
+  <div class="section-title">4. What is prompt engineering? What is function calling? <span class="badge badge-blue">CORE</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> Prompt engineering = writing precise instructions so the LLM behaves predictably, like writing a really good job description for a contractor. Function calling = giving the LLM a menu of tools it can invoke (with input/output schemas), and it tells you which tool to call and with what arguments — your code actually runs it.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    Prompt engineering is crafting the input to an LLM to get reliable, structured output. The key techniques are: system prompts to set constraints and output format, few-shot examples to show the model what you want, and chain-of-thought to make the model reason step-by-step before answering. Function calling is a separate concept — you define tools as JSON schemas (name, description, parameters), and the LLM returns a structured tool_call object when it wants to use one. Your application then executes the actual function and feeds the result back. This is how agents interact with real systems like databases or APIs.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> In Spring AI you implement function calling with <code>@Tool</code>-annotated methods. The model picks the right tool based purely on the description you write, so a good description is as important as the implementation. Also, for structured JSON output, Spring AI's <code>BeanOutputConverter</code> auto-generates a schema from your Java class and injects it into the prompt — zero manual parsing.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">system prompt</span>
+    <span class="key-chip">few-shot</span>
+    <span class="key-chip">chain-of-thought</span>
+    <span class="key-chip">function calling</span>
+    <span class="key-chip">tool_call schema</span>
+    <span class="key-chip">@Tool</span>
+    <span class="key-chip">BeanOutputConverter</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q5: Vector Embeddings & Retrieval                             -->
+<!-- ============================================================ -->
+<div class="section" id="q5">
+  <div class="section-title">5. What is a vector embedding? How does retrieval work? <span class="badge badge-orange">HIGH LIKELY</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> An embedding is a list of ~1500 numbers that captures the meaning of a piece of text. Similar texts get similar numbers. Retrieval = convert your query to the same kind of number list, then find stored documents whose numbers are closest — that's cosine similarity search. The closer the angle between two vectors, the more semantically similar the texts.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    A vector embedding is a high-dimensional numerical representation of text produced by an embedding model like OpenAI's text-embedding-3-small. Semantically similar texts have embeddings that are close together in vector space, measured by cosine similarity. In a RAG pipeline: at ingest time you embed each document chunk and store it in a vector database. At query time you embed the user's question, run a nearest-neighbor search in the DB to find the most similar chunks, and inject those chunks into the LLM prompt as context. I used this exact flow with MongoDB Atlas Vector Search in my personal project.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> Pure vector search can miss exact keyword matches. The production approach is <strong>hybrid search</strong> — combine semantic vector search with BM25 keyword search and merge results using Reciprocal Rank Fusion (RRF). Most production RAG systems also add a <strong>reranking step</strong> — take the top-20 vector results, run a cross-encoder reranker on them, and pass only the top-5 to the LLM. This dramatically improves answer quality.
+  </div>
+
+  <div class="diagram">
+    <div class="diag-label">RAG retrieval flow</div>
+    <div class="diag-row">
+      <div class="diag-col">
+        <div class="diag-box gray" style="font-size:11px">User Question</div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box purple">Embedding Model<br><span style="font-size:10px;font-weight:normal">text → float[1536]</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box orange">Vector DB<br><span style="font-size:10px;font-weight:normal">cosine similarity search</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box">Top-K Chunks<br><span style="font-size:10px;font-weight:normal">injected as context</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box green">LLM Answer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">text-embedding-3-small</span>
+    <span class="key-chip">cosine similarity</span>
+    <span class="key-chip">nearest-neighbor search</span>
+    <span class="key-chip">hybrid search</span>
+    <span class="key-chip">BM25</span>
+    <span class="key-chip">RRF</span>
+    <span class="key-chip">reranker</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q6: Spring AI                                                  -->
+<!-- ============================================================ -->
+<div class="section" id="q6">
+  <div class="section-title">6. What is Spring AI? <span class="badge badge-blue">CORE</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> Spring AI is to LLMs what Spring Data is to databases — a portable abstraction layer. You write code against the Spring AI API, and you can swap from OpenAI to Azure OpenAI to Claude by changing one config property. It also has built-in RAG support so you don't have to wire everything manually.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    Spring AI is the official Spring framework for integrating LLMs into Java applications. Its main value is portability — you write against a common <code>ChatClient</code> interface and switch between OpenAI, Azure OpenAI, Claude, or Ollama via config. The three core abstractions are: <code>ChatClient</code> for chat interactions with support for streaming via Flux, <code>EmbeddingModel</code> for generating vectors, and <code>VectorStore</code> for storing and retrieving embeddings. There's also a <code>QuestionAnswerAdvisor</code> that wires RAG automatically — attach it to your ChatClient and it retrieves relevant documents on every call with zero boilerplate.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> Spring AI has an "advisors" chain concept — middleware that wraps every LLM call. You can add a RAG advisor, a logging advisor, a safety-check advisor, and they all run in sequence. It's the same pattern as Spring's HandlerInterceptor chain, which makes it very intuitive if you know Spring MVC.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">ChatClient</span>
+    <span class="key-chip">EmbeddingModel</span>
+    <span class="key-chip">VectorStore</span>
+    <span class="key-chip">QuestionAnswerAdvisor</span>
+    <span class="key-chip">advisors chain</span>
+    <span class="key-chip">Flux streaming</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q7: Hallucinations                                            -->
+<!-- ============================================================ -->
+<div class="section" id="q7">
+  <div class="section-title">7. How do you handle hallucinations in production? <span class="badge badge-orange">HIGH LIKELY</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> Hallucination = the model invents plausible-sounding but wrong facts. You can't eliminate it, but you can contain it with three defenses: ground the model in real documents (RAG), constrain what it's allowed to say (system prompt + output validation), and catch bad outputs before they reach users (guardrails layer).
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    I tackle hallucinations at multiple layers. First, RAG grounding — the system prompt explicitly says "answer only from the provided context; if the answer isn't there, say I don't know." This eliminates most factual hallucinations. Second, temperature zero for factual tasks — lower temperature means the model is less "creative." Third, structural validation — if I expect JSON output, I parse it and retry with a stricter prompt if it fails. And fourth, a guardrails advisor that checks the output for obvious issues like PII leakage or off-topic content before returning to the user. In Spring AI I implement this as a post-processing advisor in the chain.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> For critical use cases I use self-consistency — generate 3 responses independently, compare them, and flag cases where they disagree as low-confidence. Also, for entity names specifically (like service names or API endpoints) I cross-validate the model's output against a known registry. A model claiming a service name exists can be checked in milliseconds with a simple lookup.
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">RAG grounding</span>
+    <span class="key-chip">temperature=0</span>
+    <span class="key-chip">structural validation</span>
+    <span class="key-chip">retry with stricter prompt</span>
+    <span class="key-chip">guardrails advisor</span>
+    <span class="key-chip">self-consistency</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q8: Token Optimization                                        -->
+<!-- ============================================================ -->
+<div class="section" id="q8">
+  <div class="section-title">8. What is token optimization / cost management for LLMs? <span class="badge badge-blue">CORE</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> LLMs charge per token (roughly 0.75 words). Your bill = (prompt tokens + completion tokens) × price per model. Cost optimization = send fewer tokens and use cheaper models where possible. It's the same as query optimization in databases — don't fetch what you don't need.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    Three main levers. First, model routing — use a cheap, fast model like GPT-4o mini or Claude Haiku for simple tasks like classification or extraction; only escalate to GPT-4o or Opus for complex reasoning. This alone can cut costs by 60-70%. Second, prompt compression — summarize old chat history instead of passing the full transcript, and remove unnecessary filler from system prompts. Third, semantic caching — embed the user query and cache the response; if a near-identical question comes in with cosine similarity above 0.97, return the cached answer instead of calling the API. I also always set a max_tokens cap on completions to avoid surprise costs.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> For token counting in Java, use the <code>jtokkit</code> library — it's a port of OpenAI's tiktoken. Count tokens before the API call so you can proactively truncate or summarize context rather than getting a 400 error for exceeding the context window. Also, in RAG pipelines, retrieved chunk size directly impacts prompt token count — tuning chunk size is both a retrieval quality and a cost decision.
+  </div>
+
+  <table class="comp">
+    <thead><tr><th>Lever</th><th>Technique</th><th>Typical Savings</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Model Routing</strong></td><td>Cheap model for simple tasks</td><td>60–70%</td></tr>
+      <tr><td><strong>Semantic Cache</strong></td><td>Reuse if similarity &gt; 0.97</td><td>30–50% on repeated queries</td></tr>
+      <tr><td><strong>Prompt Compression</strong></td><td>Summarize history, trim filler</td><td>20–40%</td></tr>
+      <tr><td><strong>max_tokens cap</strong></td><td>Hard limit on completion size</td><td>Predictable billing</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-row">
+    <span class="key-chip">model routing</span>
+    <span class="key-chip">semantic caching</span>
+    <span class="key-chip">prompt compression</span>
+    <span class="key-chip">max_tokens</span>
+    <span class="key-chip">jtokkit</span>
+    <span class="key-chip">context window</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q9: Situational — Incident Triage Agent                       -->
+<!-- ============================================================ -->
+<div class="section" id="q9">
+  <div class="section-title">9. How would you build an AI agent that auto-triages cloud incidents from logs? <span class="badge">DESIGN</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> Think of it as three layers: Kafka streams the logs in real-time → a rules engine handles known errors instantly (no AI needed) → an AI agent handles unknown errors by looking up similar past incidents and generating a triage report. The agent decides severity, suggests a fix, and routes the alert to the right team.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    I'd design it as a four-layer pipeline. Layer one: stream cloud application logs into Kafka topics, one per service. A Kafka Streams job filters out DEBUG/INFO and forwards only WARN/ERROR events. Layer two: a Spring Boot consumer applies a fast rules engine for known error patterns — OOM errors, DB connection failures — these get immediate playbook-based triage. Unknown errors escalate to the AI agent. Layer three: a LangGraph agent with four nodes — classify the error severity (P1/P2/P3), do RAG retrieval over past incident runbooks, generate a structured triage report with root cause and suggested fix, then a human-review gate that routes P1 to PagerDuty immediately and P2/P3 to a ticket queue. Layer four: a feedback loop where resolved incidents feed back into the RAG knowledge base.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> I'd add an entity validator as a guardrail — before the alert fires, cross-check any service names the LLM mentions against the actual service registry. This prevents hallucinated service names from causing confusion.
+  </div>
+
+  <!-- Incident Triage Agent Architecture Diagram -->
+  <div class="diagram">
+    <div class="diag-label">AI Incident Triage Agent — Architecture</div>
+
+    <!-- Row 1: Ingestion -->
+    <div class="diag-row">
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">INGESTION</div>
+        <div class="diag-box gray">Cloud Application Logs</div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">&nbsp;</div>
+        <div class="diag-box orange">Kafka Topic<br><span style="font-size:10px;font-weight:normal">errors (per service)</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">&nbsp;</div>
+        <div class="diag-box">Kafka Streams<br><span style="font-size:10px;font-weight:normal">filter DEBUG/INFO</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:18px;color:#0070f3;margin:4px 0">↓</div>
+
+    <!-- Row 2: Rules Engine fork -->
+    <div class="diag-row">
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">FAST PATH</div>
+        <div class="diag-box">Spring Boot Consumer<br><span style="font-size:10px;font-weight:normal">Rules Engine</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">known pattern</div>
+        <div class="diag-box green">Playbook Triage<br><span style="font-size:10px;font-weight:normal">immediate fix</span></div>
+      </div>
+      <div class="diag-arrow" style="color:#dc3545">→</div>
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">unknown error</div>
+        <div class="diag-box red">Escalate to AI Agent</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:18px;color:#0070f3;margin:4px 0">↓</div>
+
+    <!-- Row 3: LangGraph agent nodes -->
+    <div style="font-size:10px;color:#888;text-align:center;margin-bottom:4px">LANGGRAPH AGENT</div>
+    <div class="diag-row">
+      <div class="diag-col">
+        <div class="diag-box purple">Node 1<br><span style="font-size:10px;font-weight:normal">classify_error<br>P1 / P2 / P3</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box purple">Node 2<br><span style="font-size:10px;font-weight:normal">retrieve_context<br>RAG over runbooks</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box purple">Node 3<br><span style="font-size:10px;font-weight:normal">generate_triage<br>root cause + fix</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box orange">Node 4<br><span style="font-size:10px;font-weight:normal">review_gate<br>P1 → PagerDuty<br>P2/P3 → ticket</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:18px;color:#0070f3;margin:4px 0">↓</div>
+
+    <!-- Row 4: Guardrail + Feedback -->
+    <div class="diag-row">
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">GUARDRAIL</div>
+        <div class="diag-box red">entity_validator<br><span style="font-size:10px;font-weight:normal">check service names vs registry</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div style="font-size:10px;color:#888;text-align:center;margin-bottom:2px">FEEDBACK LOOP</div>
+        <div class="diag-box green">Resolved Incidents<br><span style="font-size:10px;font-weight:normal">feed back into RAG KB</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">Kafka Streams</span>
+    <span class="key-chip">rules engine fast-path</span>
+    <span class="key-chip">LangGraph</span>
+    <span class="key-chip">RAG over runbooks</span>
+    <span class="key-chip">review_gate</span>
+    <span class="key-chip">entity_validator</span>
+    <span class="key-chip">feedback loop</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Q10: Multi-Agent Orchestration                                 -->
+<!-- ============================================================ -->
+<div class="section" id="q10">
+  <div class="section-title">10. What is multi-agent orchestration? <span class="badge badge-blue">CORE</span></div>
+
+  <div class="hint hint-blue">
+    <strong>Mental Model:</strong> One agent trying to do everything is like a single developer handling frontend, backend, QA, and deployment alone — it works for small tasks but doesn't scale. Multi-agent = a team. An orchestrator breaks the task and delegates to specialist agents. Each specialist is focused, faster, and cheaper to run.
+  </div>
+
+  <div class="hint">
+    <strong>Interview Answer (say this):</strong><br>
+    Multi-agent orchestration is when multiple AI agents collaborate on a task, each responsible for a specific capability. The most common pattern is Orchestrator-Worker: an orchestrator LLM breaks the task into subtasks and delegates them to specialist agents — for example, a Retrieval Agent that searches the knowledge base, a Code Agent that writes or executes code, and a Validation Agent that checks the output. They communicate via message passing, and the orchestrator aggregates their results. Frameworks like AutoGen from Microsoft make this explicit, with agents that can critique each other's outputs in a loop until the result is good enough.
+  </div>
+
+  <div class="hint hint-green">
+    <strong>Also worth mentioning:</strong> The hardest part of multi-agent systems isn't the agents themselves — it's shared state management and loop termination. You need to define clear stopping conditions otherwise agents can argue indefinitely. Also, parallel agent execution needs careful coordination; LangGraph handles this with its fork/join graph edges, where you can branch out to multiple agents in parallel and merge their results at a join node.
+  </div>
+
+  <div class="diagram">
+    <div class="diag-label">Orchestrator-Worker pattern</div>
+    <div class="diag-row">
+      <div class="diag-col" style="flex:0.5">
+        <div class="diag-box orange">Orchestrator<br><span style="font-size:10px;font-weight:normal">breaks task,<br>delegates</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col">
+        <div class="diag-box purple" style="margin-bottom:4px">Retrieval Agent<br><span style="font-size:10px;font-weight:normal">searches KB / DB</span></div>
+        <div class="diag-box">Code Agent<br><span style="font-size:10px;font-weight:normal">writes / runs code</span></div>
+      </div>
+      <div class="diag-arrow">→</div>
+      <div class="diag-col" style="flex:0.5">
+        <div class="diag-box green">Aggregated<br>Result</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-row">
+    <span class="key-chip">Orchestrator-Worker</span>
+    <span class="key-chip">AutoGen</span>
+    <span class="key-chip">message passing</span>
+    <span class="key-chip">specialist agents</span>
+    <span class="key-chip">fork/join graph</span>
+    <span class="key-chip">shared state</span>
+    <span class="key-chip">stopping conditions</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#f0f6ff; border-top:2px solid #0070f3; padding:10px 24px; font-size:11px; color:#555; text-align:center;">
+  Full Stack Java AI Developer — Interview Prep &nbsp;|&nbsp;
+  <strong style="color:#0050b3">Strategy:</strong> Ground every answer in your real experience — LangChain + MongoDB + OpenAI RAG project + Kafka background.
+</div>
+
+</body>
+</html>
