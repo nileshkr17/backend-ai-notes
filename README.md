@@ -4,8 +4,7 @@ If you find this useful, give it a ⭐ and follow — it helps others find this 
 Found a mistake or want to add a topic? Feel free to open a PR — all contributions are welcome.
 
 
--nileshkr17 
-
+-nileshkr17 :)
 ---
 
 Complete interview prep for **Backend Java + AI/ML roles** — Java internals, Spring Boot, System Design, Security, DSA, and Generative AI engineering.
@@ -49,8 +48,8 @@ The HTML files are browsable directly — no cloning needed:
 
 | File | Live Link |
 |---|---|
-| `ai_deep_knowledge.html` | [View →](https://nileshkr17.github.io/backend-ai-interview-notes/ai_deep_knowledge.html) |
-| `[imp pipeline]java_ai_dev_prep.html` | [View →](https://nileshkr17.github.io/backend-ai-interview-notes/%5Bimp%20pipeline%5Djava_ai_dev_prep.html) |
+| `ai_deep_knowledge.html` | [View →](https://nileshkr17.github.io/backend-ai-notes/ai_deep_knowledge.html) |
+| `[imp pipeline]java_ai_dev_prep.html` | [View →](https://nileshkr17.github.io/backend-ai-notes/%5Bimp%20pipeline%5Djava_ai_dev_prep.html) |
 
 > Enable GitHub Pages from repo **Settings → Pages → Branch: main → / (root)** to activate these links.
 
