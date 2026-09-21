@@ -51,14 +51,13 @@ The HTML files are browsable directly — no cloning needed:
 | `ai_deep_knowledge.html` | [View →](https://nileshkr17.github.io/backend-ai-notes/ai_deep_knowledge.html) |
 | `[imp pipeline]java_ai_dev_prep.html` | [View →](https://nileshkr17.github.io/backend-ai-notes/%5Bimp%20pipeline%5Djava_ai_dev_prep.html) |
 
-> Enable GitHub Pages from repo **Settings → Pages → Branch: main → / (root)** to activate these links.
 
 ---
 
 ## Notes
 
 - HTML files open directly in any browser — no server needed.
-- MD files are best viewed in VS Code, Obsidian, or GitHub.
+- MD files are best viewed in [doclib.pro](https://doclib.pro), VS Code, Obsidian, or GitHub.
 
 ---
 
